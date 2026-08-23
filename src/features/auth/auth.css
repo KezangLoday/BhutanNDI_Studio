@@ -1,0 +1,110 @@
+.ndi-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ndi-auth-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.ndi-auth-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-accent);
+  cursor: pointer;
+  transition: color var(--dur) var(--ease-out);
+}
+
+.ndi-auth-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+.ndi-auth-link--centered {
+  align-self: center;
+}
+
+/* Method chooser */
+.ndi-method-intro {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-body);
+  margin: 0;
+}
+
+.ndi-method-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-grid);
+  background: var(--fill-card);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card);
+}
+
+.ndi-method-faq__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ndi-method-faq__q {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  margin: 0;
+}
+
+.ndi-method-faq__a {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.ndi-method-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Identity pill shown on the login-method step */
+.ndi-identity-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: center;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-grid);
+  background: var(--mint-04);
+  color: var(--text-body);
+  font-size: 13.5px;
+}
+
+.ndi-identity-pill svg {
+  color: var(--text-accent);
+}
+
+.ndi-method-headline {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  margin: 0;
+  text-align: center;
+  text-wrap: balance;
+}

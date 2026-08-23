@@ -1,0 +1,141 @@
+/**
+ * Drawn line illustrations in the NDI style: one mint hue, 1.7px strokes,
+ * geometric, no raster clipart. Each viewBox is cropped tight to its own
+ * artwork so the panel below it doesn't inherit empty padding.
+ */
+
+const STROKE = "var(--ndi-mint)";
+const STROKE_DIM = "rgba(90,201,148,0.34)";
+const FILL_GLASS = "rgba(90,201,148,0.06)";
+
+function SceneDefs() {
+  return (
+    <defs>
+      <linearGradient id="ndiScanline" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="var(--ndi-mint)" stopOpacity="0" />
+        <stop offset="50%" stopColor="var(--ndi-mint-bright)" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="var(--ndi-mint)" stopOpacity="0" />
+      </linearGradient>
+    </defs>
+  );
+}
+
+/** Sign-in: a credential panel with an identity field and a verified seal. */
+export function SecureSignInScene() {
+  return (
+    <svg viewBox="34 30 354 242" fill="none" className="ndi-scene" role="img" aria-label="Secure sign-in illustration">
+      <SceneDefs />
+
+      {/* Back panel, offset for depth */}
+      <rect x="86" y="42" width="266" height="176" rx="14" stroke={STROKE_DIM} strokeWidth="1.7" />
+
+      {/* Front credential panel */}
+      <rect x="52" y="74" width="266" height="176" rx="14" fill={FILL_GLASS} stroke={STROKE} strokeWidth="1.7" />
+      <path d="M52 108h266" stroke={STROKE} strokeWidth="1.7" />
+      <circle cx="72" cy="91" r="3.4" stroke={STROKE} strokeWidth="1.4" />
+      <circle cx="86" cy="91" r="3.4" stroke={STROKE} strokeWidth="1.4" />
+      <circle cx="100" cy="91" r="3.4" stroke={STROKE} strokeWidth="1.4" />
+
+      {/* Portrait block */}
+      <rect x="76" y="130" width="56" height="66" rx="8" stroke={STROKE} strokeWidth="1.7" />
+      <circle cx="104" cy="152" r="11" stroke={STROKE} strokeWidth="1.7" />
+      <path d="M85 190a19 19 0 0 1 38 0" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+
+      {/* Data rows */}
+      <path d="M150 138h140" stroke={STROKE_DIM} strokeWidth="1.7" strokeLinecap="round" />
+      <path d="M150 158h104" stroke={STROKE_DIM} strokeWidth="1.7" strokeLinecap="round" />
+
+      {/* Active input field with a travelling scanline */}
+      <rect x="150" y="176" width="140" height="26" rx="7" stroke={STROKE} strokeWidth="1.7" />
+      <rect className="ndi-scene__scan" x="156" y="188" width="60" height="2" rx="1" fill="url(#ndiScanline)" />
+
+      {/* Submit control */}
+      <rect x="76" y="212" width="82" height="24" rx="7" fill="rgba(90,201,148,0.12)" stroke={STROKE} strokeWidth="1.7" />
+      <path d="M104 224h26M124 219l5 5-5 5" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+
+      {/* Verified seal */}
+      <g className="ndi-scene__seal">
+        <circle cx="322" cy="228" r="34" fill="rgba(12,17,27,0.92)" stroke={STROKE} strokeWidth="1.7" />
+        <path
+          d="M322 204c-6 3-10.5 4.2-10.5 4.2v14c0 8.4 4.5 13 10.5 15.6 6-2.6 10.5-7.2 10.5-15.6v-14S328 207 322 204Z"
+          stroke={STROKE}
+          strokeWidth="1.7"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M317 222.5l3.6 3.6 7-7.4"
+          stroke="var(--ndi-mint-bright)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+
+      {/* Orbiting nodes */}
+      <circle cx="46" cy="60" r="4" stroke={STROKE_DIM} strokeWidth="1.7" />
+      <circle cx="376" cy="96" r="4" stroke={STROKE_DIM} strokeWidth="1.7" />
+      <path d="M46 60h34M376 96h-30" stroke={STROKE_DIM} strokeWidth="1.7" strokeDasharray="3 5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Passkey: a device frame holding a fingerprint, with a key node beside it. */
+export function PasskeyScene() {
+  return (
+    <svg viewBox="26 36 366 248" fill="none" className="ndi-scene" role="img" aria-label="Passkey authentication illustration">
+      <SceneDefs />
+
+      {/* Device frame */}
+      <rect x="118" y="44" width="184" height="232" rx="22" fill={FILL_GLASS} stroke={STROKE} strokeWidth="1.7" />
+      <path d="M186 60h48" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+
+      {/* Fingerprint — nested ridges, each a closed loop open at the base */}
+      <g className="ndi-scene__print">
+        <path
+          d="M166 176a44 44 0 0 1 88 0v8"
+          stroke={STROKE_DIM}
+          strokeWidth="1.7"
+          strokeLinecap="round"
+        />
+        <path d="M166 176v10" stroke={STROKE_DIM} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M177 176a33 33 0 0 1 66 0v16" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M177 176v16" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M188 176a22 22 0 0 1 44 0v24" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M188 176v24" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M199 176a11 11 0 0 1 22 0v30" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M199 176v30" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M210 165v41" stroke="var(--ndi-mint-bright)" strokeWidth="1.7" strokeLinecap="round" />
+      </g>
+
+      {/* Scanline sweeping the print */}
+      <rect className="ndi-scene__scan-wide" x="154" y="170" width="112" height="2" rx="1" fill="url(#ndiScanline)" />
+
+      {/* Confirmation row inside the device */}
+      <rect x="150" y="220" width="120" height="30" rx="9" stroke={STROKE} strokeWidth="1.7" />
+      <circle cx="170" cy="235" r="7" stroke="var(--ndi-mint-bright)" strokeWidth="1.7" />
+      <path d="M167 235l2.6 2.6 4.4-5" stroke="var(--ndi-mint-bright)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M188 235h58" stroke={STROKE_DIM} strokeWidth="1.7" strokeLinecap="round" />
+
+      {/* Key node, left */}
+      <g className="ndi-scene__seal">
+        <circle cx="62" cy="120" r="28" fill="rgba(12,17,27,0.92)" stroke={STROKE} strokeWidth="1.7" />
+        <circle cx="56" cy="114" r="7" stroke={STROKE} strokeWidth="1.7" />
+        <path d="M61 119l14 14M69 127l5 5M75 121l5 5" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+      </g>
+
+      {/* Cloud / sync node, right */}
+      <g className="ndi-scene__seal">
+        <circle cx="356" cy="200" r="28" fill="rgba(12,17,27,0.92)" stroke={STROKE} strokeWidth="1.7" />
+        <path
+          d="M344 205a7 7 0 0 1 1.4-13.8 10 10 0 0 1 19 2.4 6 6 0 0 1-1.4 11.4h-19Z"
+          stroke={STROKE}
+          strokeWidth="1.7"
+          strokeLinejoin="round"
+        />
+      </g>
+
+      {/* Trace links */}
+      <path d="M90 120h28M328 200h-26" stroke={STROKE_DIM} strokeWidth="1.7" strokeDasharray="3 5" strokeLinecap="round" />
+    </svg>
+  );
+}

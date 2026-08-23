@@ -1,0 +1,72 @@
+.ndi-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ndi-field-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-body);
+}
+
+.ndi-field-required {
+  color: var(--ndi-danger);
+}
+
+.ndi-field-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ndi-field-icon {
+  position: absolute;
+  left: 16px;
+  display: inline-flex;
+  color: var(--text-faint);
+  pointer-events: none;
+}
+
+.ndi-field {
+  height: 48px;
+  width: 100%;
+  border-radius: var(--radius-control);
+  padding: 0 14px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-grid);
+  color: var(--text-strong);
+  font-size: 14px;
+  font-family: var(--font-body);
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+
+.ndi-field--with-icon {
+  padding-left: 44px;
+}
+
+.ndi-field::placeholder {
+  color: var(--text-faint);
+  opacity: 0.7;
+}
+
+.ndi-field:hover {
+  border-color: var(--border-strong);
+}
+
+.ndi-field:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--ring);
+}
+
+.ndi-field:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.ndi-field-helper {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-faint);
+}

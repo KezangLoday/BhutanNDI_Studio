@@ -1,0 +1,112 @@
+.ndi-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--radius-control);
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out),
+    background var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+  white-space: nowrap;
+}
+
+.ndi-btn--full {
+  width: 100%;
+}
+
+.ndi-btn:focus-visible {
+  box-shadow: var(--ring);
+  outline: none;
+}
+
+.ndi-btn__icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ndi-btn:disabled {
+  cursor: not-allowed;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-faint);
+  box-shadow: none;
+  transform: none;
+}
+
+.ndi-btn:disabled .ndi-btn__sweep {
+  display: none;
+}
+
+.ndi-btn--primary {
+  color: #08130f;
+  background: linear-gradient(115deg, #8cf0c0 0%, #6fe0a9 24%, #4fc091 56%, #2fa189 80%, #1e8189 100%);
+  box-shadow: var(--glow-sm);
+}
+
+.ndi-btn--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glow-md);
+}
+
+.ndi-btn--primary:active {
+  transform: scale(0.99);
+}
+
+.ndi-btn__sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+.ndi-btn--primary:hover .ndi-btn__sweep {
+  animation: ndiSweep 1s var(--ease-out);
+}
+
+@keyframes ndiSweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.ndi-btn--secondary {
+  height: 46px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-grid);
+  background: transparent;
+  color: var(--text-body);
+}
+
+.ndi-btn--secondary:hover {
+  background: var(--mint-08);
+  border-color: rgba(90, 201, 148, 0.42);
+  color: var(--text-strong);
+  box-shadow: var(--glow-sm);
+}
+
+.ndi-btn--outline {
+  border: 1px solid var(--border-grid);
+  background: var(--surface-raised);
+  color: var(--text-strong);
+}
+
+.ndi-btn--outline:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+}
+
+@media (hover: none) {
+  .ndi-btn--primary:hover,
+  .ndi-btn--secondary:hover {
+    transform: none;
+  }
+}

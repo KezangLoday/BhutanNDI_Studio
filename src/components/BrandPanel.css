@@ -1,0 +1,160 @@
+.ndi-brand-panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--grad-depth);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.ndi-brand-panel__grid {
+  position: absolute;
+  inset: 0;
+  background-image: var(--grid-bg);
+  background-size: var(--grid-size);
+  mask-image: radial-gradient(70% 60% at 50% 40%, black, transparent);
+}
+
+.ndi-brand-panel__glow {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(90, 201, 148, 0.18), transparent 70%);
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(20px);
+  animation: ndiGlowPulse 6s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes ndiGlowPulse {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ndi-brand-panel__content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.ndi-brand-panel__scene {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.ndi-scene {
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: ndiSceneIn var(--dur-slow) var(--ease-out);
+}
+
+@keyframes ndiSceneIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ndi-scene__scan {
+  animation: ndiScan 2.8s var(--ease-in-out) infinite;
+}
+
+.ndi-scene__scan-wide {
+  animation: ndiScanWide 3.2s var(--ease-in-out) infinite;
+}
+
+@keyframes ndiScan {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(64px);
+    opacity: 1;
+  }
+}
+
+@keyframes ndiScanWide {
+  0%,
+  100% {
+    transform: translateY(-38px);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(38px);
+    opacity: 1;
+  }
+}
+
+.ndi-scene__seal {
+  animation: ndiFloat 5s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes ndiFloat {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+
+.ndi-brand-panel__title {
+  font-size: clamp(28px, 3vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.ndi-brand-panel__lead {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.ndi-brand-panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.ndi-brand-chip {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-grid);
+  background: rgba(12, 17, 27, 0.5);
+}
+
+@media (max-width: 900px) {
+  .ndi-brand-panel {
+    display: none;
+  }
+}
