@@ -7,7 +7,6 @@ import { TopBar } from "./TopBar";
 
 interface AppShellProps {
   children: ReactNode;
-  active?: string;
 }
 
 /**
@@ -15,13 +14,13 @@ interface AppShellProps {
  * 901px (the website's tablet→desktop breakpoint), and the scrolling content
  * column beside it.
  */
-export function AppShell({ children, active }: AppShellProps) {
+export function AppShell({ children }: AppShellProps) {
   const [navOpen, setNavOpen] = useState(false);
 
   return (
     <div className="min-h-dvh">
       <TopBar navOpen={navOpen} onToggleNav={() => setNavOpen((o) => !o)} />
-      <Sidebar active={active} open={navOpen} onClose={() => setNavOpen(false)} />
+      <Sidebar open={navOpen} onClose={() => setNavOpen(false)} />
 
       {/* The sidebar is fixed, so the content column is inset rather than
           laid out beside it. */}

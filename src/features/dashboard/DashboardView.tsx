@@ -9,7 +9,7 @@ import { Icon } from "@/components/ui/icons";
 
 export function DashboardView({ firstName = "Kezang" }: { firstName?: string }) {
   return (
-    <AppShell active="Dashboard">
+    <AppShell>
       <div className="flex flex-col gap-5">
         <WaveBanner
           eyebrow="— Dashboard"

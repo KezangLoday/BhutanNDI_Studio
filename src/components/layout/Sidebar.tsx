@@ -1,40 +1,66 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { Icon, type IconName } from "@/components/ui/icons";
 
+interface NavChild {
+  label: string;
+  href: string;
+  icon: IconName;
+}
+
 interface NavItem {
   label: string;
   icon: IconName;
-  /** A group renders a disclosure with children instead of a plain row. */
-  children?: string[];
+  href?: string;
+  /** A group renders a disclosure over its children instead of a plain row. */
+  children?: NavChild[];
+  /** Off-app destinations, which get the external-link treatment. */
+  external?: boolean;
 }
 
 const PRIMARY: NavItem[] = [
-  { label: "Dashboard", icon: "dashboard" },
-  { label: "Organizations", icon: "building" },
-  { label: "Users", icon: "users" },
-  { label: "Connections", icon: "connections" },
-  { label: "Credentials", icon: "credentials", children: ["Schemas", "Credential definitions", "Issuance", "Verification"] },
-  { label: "Ecosystems", icon: "ecosystems" },
+  { label: "Dashboard", icon: "dashboard", href: "/dashboard" },
+  { label: "Organizations", icon: "building", href: "/organizations" },
+  { label: "Users", icon: "users", href: "/users" },
+  { label: "Connections", icon: "connections", href: "/connections" },
+  {
+    label: "Credentials",
+    icon: "credentials",
+    children: [
+      { label: "Issue", href: "/credentials/issue", icon: "issue" },
+      { label: "Verify", href: "/credentials/verify", icon: "verify" },
+    ],
+  },
+  { label: "Ecosystems", icon: "ecosystems", href: "/ecosystems" },
 ];
 
 const SECONDARY: NavItem[] = [
-  { label: "GitHub Repository", icon: "github" },
-  { label: "Documentation", icon: "fileText" },
-  { label: "Support", icon: "helpCircle" },
+  { label: "GitHub Repository", icon: "github", href: "#", external: true },
+  { label: "Documentation", icon: "fileText", href: "#", external: true },
+  { label: "Support", icon: "helpCircle", href: "#", external: true },
 ];
 
 interface SidebarProps {
-  active?: string;
-  /** Mobile: the drawer is closed until the top bar's control opens it. */
   open?: boolean;
   onClose?: () => void;
 }
 
-export function Sidebar({ active = "Dashboard", open = false, onClose }: SidebarProps) {
-  const [expanded, setExpanded] = useState<string | null>(null);
+export function Sidebar({ open = false, onClose }: SidebarProps) {
+  const pathname = usePathname();
+
+  const groupHoldsPath = (item: NavItem) =>
+    Boolean(item.children?.some((child) => pathname.startsWith(child.href)));
+
+  /** A group containing the current page starts open; otherwise closed. */
+  const [expanded, setExpanded] = useState<string | null>(
+    PRIMARY.find(groupHoldsPath)?.label ?? null,
+  );
+
+  const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <>
@@ -52,16 +78,15 @@ export function Sidebar({ active = "Dashboard", open = false, onClose }: Sidebar
 
       <aside
         aria-label="Main"
+        data-open={open ? "1" : "0"}
         className="fixed left-0 top-16 z-[55] flex h-[calc(100dvh-4rem)] w-[248px] flex-col overflow-y-auto border-r border-subtle bg-[rgba(12,17,27,0.86)] px-3 py-5 backdrop-blur-[20px] transition-transform duration-[260ms] ease-ndi min-[901px]:translate-x-0 min-[901px]:bg-transparent min-[901px]:backdrop-blur-none"
         style={{ transform: open ? "translateX(0)" : undefined }}
-        data-open={open ? "1" : "0"}
       >
         <nav className="flex flex-col gap-0.5">
           {PRIMARY.map((item) => {
-            const isActive = active === item.label;
-
             if (item.children) {
               const isOpen = expanded === item.label;
+              const holdsCurrent = groupHoldsPath(item);
               return (
                 <div key={item.label}>
                   <button
@@ -69,7 +94,9 @@ export function Sidebar({ active = "Dashboard", open = false, onClose }: Sidebar
                     onClick={() => setExpanded(isOpen ? null : item.label)}
                     aria-expanded={isOpen}
                     className="ndi-navrow flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-left font-display text-[13.5px] font-medium"
-                    data-active={isActive ? "1" : "0"}
+                    /* The parent shows as current only while collapsed — with
+                       the group open, the active child carries that signal. */
+                    data-active={holdsCurrent && !isOpen ? "1" : "0"}
                   >
                     <Icon name={item.icon} size={18} strokeWidth={1.7} className="flex-none" />
                     <span className="flex-1">{item.label}</span>
@@ -81,18 +108,21 @@ export function Sidebar({ active = "Dashboard", open = false, onClose }: Sidebar
                       style={{ transform: `rotate(${isOpen ? 180 : 0}deg)` }}
                     />
                   </button>
+
                   {isOpen ? (
-                    <div className="mt-0.5 flex flex-col gap-0.5 pb-1 pl-[34px]">
+                    <div className="mt-0.5 flex flex-col gap-0.5 pb-1 pl-[22px]">
                       {item.children.map((child) => (
-                        <button
-                          key={child}
-                          type="button"
-                          className="ndi-navrow flex items-center gap-2.5 rounded-[9px] px-3 py-2 text-left text-[13px]"
-                          data-active="0"
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          onClick={onClose}
+                          aria-current={isCurrent(child.href) ? "page" : undefined}
+                          className="ndi-navrow flex items-center gap-2.5 rounded-[9px] px-3 py-2 font-display text-[13px] font-medium"
+                          data-active={isCurrent(child.href) ? "1" : "0"}
                         >
-                          <span className="ndi-navdot" aria-hidden="true" />
-                          {child}
-                        </button>
+                          <Icon name={child.icon} size={16} strokeWidth={1.7} className="flex-none" />
+                          {child.label}
+                        </Link>
                       ))}
                     </div>
                   ) : null}
@@ -100,17 +130,19 @@ export function Sidebar({ active = "Dashboard", open = false, onClose }: Sidebar
               );
             }
 
+            const href = item.href ?? "#";
             return (
-              <button
+              <Link
                 key={item.label}
-                type="button"
-                aria-current={isActive ? "page" : undefined}
-                className="ndi-navrow flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-left font-display text-[13.5px] font-medium"
-                data-active={isActive ? "1" : "0"}
+                href={href}
+                onClick={onClose}
+                aria-current={isCurrent(href) ? "page" : undefined}
+                className="ndi-navrow flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 font-display text-[13.5px] font-medium"
+                data-active={isCurrent(href) ? "1" : "0"}
               >
                 <Icon name={item.icon} size={18} strokeWidth={1.7} className="flex-none" />
                 {item.label}
-              </button>
+              </Link>
             );
           })}
         </nav>
@@ -119,15 +151,17 @@ export function Sidebar({ active = "Dashboard", open = false, onClose }: Sidebar
 
         <nav aria-label="Resources" className="flex flex-col gap-0.5">
           {SECONDARY.map((item) => (
-            <button
+            <a
               key={item.label}
-              type="button"
-              className="ndi-navrow flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 text-left font-display text-[13.5px] font-medium"
+              href={item.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="ndi-navrow flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 font-display text-[13.5px] font-medium"
               data-active="0"
             >
               <Icon name={item.icon} size={18} strokeWidth={1.7} className="flex-none" />
               {item.label}
-            </button>
+            </a>
           ))}
         </nav>
       </aside>

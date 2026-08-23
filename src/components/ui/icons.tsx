@@ -26,6 +26,9 @@ export type IconName =
   | "github"
   | "fileText"
   | "helpCircle"
+  | "issue"
+  | "verify"
+  | "wallet"
   // chrome
   | "bell"
   | "moon"
@@ -33,6 +36,9 @@ export type IconName =
   | "info"
   | "plus"
   | "logOut"
+  | "home"
+  | "search"
+  | "refresh"
   // generic
   | "check"
   | "close"
@@ -175,10 +181,49 @@ const ALL_ICONS: Record<IconName, ReactNode> = {
       <path d="M12 17h.01" />
     </>
   ),
+  issue: (
+    <>
+      <rect x="2.5" y="6" width="14" height="10.5" rx="2" />
+      <path d="M6 10h3M6 13h5" />
+      <path d="M15 19.5h6.5M18.5 16.5l3 3-3 3" />
+    </>
+  ),
+  verify: (
+    <>
+      <rect x="4.5" y="4" width="15" height="17" rx="2.2" />
+      <path d="M9 4V2.8h6V4" />
+      <path d="M9.2 12.4l2.2 2.2 4-4.4" />
+    </>
+  ),
+  wallet: (
+    <>
+      <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18a2 2 0 0 1 2 2v1" />
+      <rect x="3" y="8" width="18" height="11" rx="2.2" />
+      <path d="M16.5 13.5h.01" />
+    </>
+  ),
   bell: (
     <>
       <path d="M18 8.5a6 6 0 1 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5Z" />
       <path d="M13.7 19.5a2 2 0 0 1-3.4 0" />
+    </>
+  ),
+  home: (
+    <>
+      <path d="M3.5 10.2 12 3.5l8.5 6.7V20a1.2 1.2 0 0 1-1.2 1.2H4.7A1.2 1.2 0 0 1 3.5 20Z" />
+      <path d="M9.5 21v-6.5h5V21" />
+    </>
+  ),
+  search: (
+    <>
+      <circle cx="10.8" cy="10.8" r="6.8" />
+      <path d="m15.8 15.8 4.4 4.4" />
+    </>
+  ),
+  refresh: (
+    <>
+      <path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1" />
+      <path d="M20.5 4.5V10H15" />
     </>
   ),
   moon: <path d="M20.5 15.2A8.5 8.5 0 1 1 9.3 3.7a6.8 6.8 0 0 0 11.2 11.5Z" />,
