@@ -42,7 +42,7 @@ presentational and takes callbacks, so wiring the real API means replacing the
 | `.ndi-field`, `.ndi-chip`, `.ndi-check`, `.ndi-sweepbtn`, sweep/glow, `.ndi-wave-text`, glass panel + lens rim, `.shiny-cta` | `src/styles/ndi-effects.css` |
 | `FIELD_CLASS`, `LABEL_CLASS`, `FIELD_BLOCK_CLASS` | `src/components/ui/formStyles.ts` |
 | `GradientButton` ramp, `ShinyButton` | `src/components/ui/*.tsx` |
-| Header pill geometry and glass | `src/components/layout/SiteHeader.tsx` |
+| Header glass treatment (blur + saturate) | `src/components/layout/SiteHeader.tsx` |
 | `Atmosphere` ground + edge pools | `src/components/layout/Atmosphere.tsx` |
 | Eyebrow, heading scale, `PageSection` widths | `SectionHeader.tsx`, `PageHero.tsx` |
 
@@ -60,6 +60,10 @@ from its existing vocabulary — flag these if you'd rather they changed:
   a flat `--surface-raised` fill.
 - **Status line, not a toast** — the website has no toast component; status is
   inline `role="status"` with an icon. The success notice follows that.
+- **Attached header, not the website's floating pill** — the Studio keeps its
+  original anchored top bar (full width, hairline underneath), re-skinned in
+  the NDI palette. An app shell reads as a workspace when its chrome is
+  anchored; the pill belongs to a marketing page.
 
 The left-rail illustrations (`scenes.tsx`) and headline copy are new — the
 originals were generic blue stock art, and the site has no auth pages to
@@ -79,6 +83,8 @@ borrow from. Worth a review pass.
   `ShinyButton`; without it the conic angle jumps instead of interpolating.
 - 44px+ touch targets, hover displacement neutralised under
   `@media (hover: none)`, motion collapsed under `prefers-reduced-motion`.
-- The logo is `ndi-mark.png`, cropped from the official
-  `ndi-horizontal-white.png`. If you have the mark as SVG, swap it in — it
-  will scale better than a 400px raster at 34px.
+- The logo is `ndi-mark-mint.png` (2496×2436), taken from the website repo's
+  own `project/assets/logos/`. **The mark-plus-"NDI" lockup is not in that
+  repo** — only the "BHUTAN" horizontal variant — so the header pairs the mark
+  with the product name as text. Drop the lockup in as SVG if you want it, and
+  it will scale better than any raster.

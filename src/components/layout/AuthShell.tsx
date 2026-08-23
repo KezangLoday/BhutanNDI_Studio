@@ -23,7 +23,9 @@ export function AuthShell({ children, title, lead, scene }: AuthShellProps) {
     <div className="flex min-h-dvh flex-col">
       <AuthHeader />
 
-      <main className="mx-auto flex w-full max-w-[1200px] flex-1 items-center px-5 pt-[104px] pb-16 min-[641px]:px-8 min-[901px]:pt-[136px]">
+      {/* The header is attached rather than floating, so the body needs no
+          clearance padding — only its own breathing room. */}
+      <main className="mx-auto flex w-full max-w-[1200px] flex-1 items-center px-5 py-14 min-[641px]:px-8 min-[901px]:py-20">
         <div className="grid w-full items-center gap-12 min-[901px]:grid-cols-[1.05fr_1fr] min-[901px]:gap-20">
           {/* Left rail — hidden on phones, where the form is the whole job. */}
           <section className="hidden min-[901px]:block">
