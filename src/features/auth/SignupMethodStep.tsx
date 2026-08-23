@@ -1,6 +1,8 @@
-import { StepHeader } from "../../components/AuthLayout";
-import { Button } from "../../components/Button";
-import { LockIcon, PasskeyIcon } from "../../components/icons";
+"use client";
+
+import { StepHeader } from "@/components/AuthLayout";
+import { Button } from "@/components/Button";
+import { LockIcon, PasskeyIcon } from "@/components/icons";
 import type { AuthMethod } from "./authTypes";
 import "./auth.css";
 

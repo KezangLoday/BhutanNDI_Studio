@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
-import { StepHeader } from "../../components/AuthLayout";
-import { Button } from "../../components/Button";
-import { TextField } from "../../components/TextField";
-import { ArrowRightIcon, MailIcon } from "../../components/icons";
+import { StepHeader } from "@/components/AuthLayout";
+import { Button } from "@/components/Button";
+import { TextField } from "@/components/TextField";
+import { ArrowRightIcon, MailIcon } from "@/components/icons";
 import "./auth.css";
 
 interface LoginEmailStepProps {

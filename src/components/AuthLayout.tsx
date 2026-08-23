@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { BrandPanel } from "./BrandPanel";
 import type { BrandScene } from "./BrandPanel";

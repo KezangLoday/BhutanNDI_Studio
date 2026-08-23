@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap");
+/* Fonts are loaded via next/font in app/layout.tsx, not an @import here. */
 @import "./tokens.css";
 
 * {
@@ -19,7 +19,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Host Grotesk isn't on Google Fonts; fall back gracefully per the spec */
 h1,
 h2,
 h3,

@@ -1,7 +1,9 @@
+"use client";
+
 import { useState } from "react";
-import { AuthLayout } from "../../components/AuthLayout";
-import type { BrandScene } from "../../components/BrandPanel";
-import { Toast } from "../../components/Toast";
+import { AuthLayout } from "@/components/AuthLayout";
+import type { BrandScene } from "@/components/BrandPanel";
+import { Toast } from "@/components/Toast";
 import { LoginEmailStep } from "./LoginEmailStep";
 import { LoginMethodStep } from "./LoginMethodStep";
 import { SignupMethodStep } from "./SignupMethodStep";
