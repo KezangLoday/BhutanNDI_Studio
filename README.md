@@ -83,8 +83,19 @@ borrow from. Worth a review pass.
   `ShinyButton`; without it the conic angle jumps instead of interpolating.
 - 44px+ touch targets, hover displacement neutralised under
   `@media (hover: none)`, motion collapsed under `prefers-reduced-motion`.
-- The logo is `ndi-mark-mint.png` (2496×2436), taken from the website repo's
-  own `project/assets/logos/`. **The mark-plus-"NDI" lockup is not in that
-  repo** — only the "BHUTAN" horizontal variant — so the header pairs the mark
-  with the product name as text. Drop the lockup in as SVG if you want it, and
-  it will scale better than any raster.
+### Logo assets
+
+| File | Use |
+|---|---|
+| `ndi-studio-lockup.svg` | The product lockup — mark + "NDI" + "STUDIO". What the header shows. |
+| `ndi-mark-mint.png` | Mark only, 2496×2436, from the website repo. For favicons and tight spaces. |
+| `ndi-horizontal-white.png` | The website's "BHUTAN NDI" lockup, for co-branding. |
+
+Two things about the lockup worth knowing:
+
+- **It weighs 566 KB**, because the circuit mark inside it is an embedded PNG
+  rather than vector paths — only the "NDI STUDIO" letterforms are real
+  vectors. A fully-vector re-export would drop it to roughly 20 KB. Worth
+  asking whoever produced it.
+- It is served with a plain `<img>`, not `next/image`: Next passes static SVG
+  through unoptimised anyway, so the component only adds caveats here.
