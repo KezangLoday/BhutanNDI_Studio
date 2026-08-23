@@ -1,10 +1,11 @@
 "use client";
 
-import { StepHeader } from "@/components/AuthLayout";
-import { Button } from "@/components/Button";
-import { LockIcon, MailIcon, PasskeyIcon } from "@/components/icons";
+import { StepHeader } from "@/components/layout/AuthShell";
+import { GradientButton } from "@/components/ui/GradientButton";
+import { HairlineButton } from "@/components/ui/HairlineButton";
+import { Icon } from "@/components/ui/icons";
+
 import type { AuthMethod } from "./authTypes";
-import "./auth.css";
 
 interface LoginMethodStepProps {
   email: string;
@@ -13,31 +14,43 @@ interface LoginMethodStepProps {
   onBack: () => void;
 }
 
-export function LoginMethodStep({ email, onSelect, onCreateAccount, onBack }: LoginMethodStepProps) {
+export function LoginMethodStep({
+  email,
+  onSelect,
+  onCreateAccount,
+  onBack,
+}: LoginMethodStepProps) {
   return (
     <>
-      <StepHeader title="Login" subtitle="Choose authentication method to Login" onBack={onBack} />
+      <StepHeader title="Login" subtitle="Choose authentication method to login" onBack={onBack} />
 
-      <div className="ndi-auth-form">
-        <span className="ndi-identity-pill">
-          <MailIcon />
+      <div className="relative z-[4] flex flex-col gap-6">
+        <span className="inline-flex items-center gap-2.5 self-start rounded-full border border-grid bg-[var(--ndi-mint-04)] px-4 py-2 text-[13.5px] text-body">
+          <Icon name="mail" size={15} strokeWidth={1.8} className="text-accent" />
           {email}
         </span>
 
-        <p className="ndi-method-headline">
-          With Passkey you don&rsquo;t need to remember complex passwords
+        <p className="m-0 text-[14.5px] leading-[1.6] text-body">
+          With a <span className="ndi-wave-text ndi-wave-tight font-semibold">passkey</span> you
+          don&rsquo;t need to remember complex passwords.
         </p>
 
-        <div className="ndi-method-buttons">
-          <Button variant="outline" fullWidth icon={<LockIcon />} iconPosition="left" onClick={() => onSelect("password")}>
-            Password
-          </Button>
-          <Button fullWidth icon={<PasskeyIcon />} iconPosition="left" onClick={() => onSelect("passkey")}>
-            Passkey
-          </Button>
+        <div className="flex flex-col gap-2.5">
+          <GradientButton block onClick={() => onSelect("passkey")}>
+            <Icon name="fingerprint" size={17} strokeWidth={1.9} />
+            Continue with passkey
+          </GradientButton>
+          <HairlineButton block onClick={() => onSelect("password")}>
+            <Icon name="lockRounded" size={17} strokeWidth={1.8} />
+            Use a password
+          </HairlineButton>
         </div>
 
-        <button type="button" className="ndi-auth-link ndi-auth-link--centered" onClick={onCreateAccount}>
+        <button
+          type="button"
+          onClick={onCreateAccount}
+          className="ndi-plainlink self-center text-sm text-accent"
+        >
           Create an account
         </button>
       </div>

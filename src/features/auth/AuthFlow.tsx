@@ -1,34 +1,52 @@
 "use client";
 
-import { useState } from "react";
-import { AuthLayout } from "@/components/AuthLayout";
-import type { BrandScene } from "@/components/BrandPanel";
-import { Toast } from "@/components/Toast";
+import { useState, type ReactNode } from "react";
+
+import { AuthShell } from "@/components/layout/AuthShell";
+import { Icon } from "@/components/ui/icons";
+import { PasskeyScene, SecureSignInScene } from "@/components/ui/scenes";
+
 import { LoginEmailStep } from "./LoginEmailStep";
 import { LoginMethodStep } from "./LoginMethodStep";
 import { SignupMethodStep } from "./SignupMethodStep";
 import { SignupNameStep } from "./SignupNameStep";
 import type { AuthMethod, AuthStep } from "./authTypes";
 
-const BRAND_COPY: Record<AuthStep, { scene: BrandScene; title: string; lead: string }> = {
+const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string }> = {
   "login-email": {
-    scene: "sign-in",
-    title: "Your identity, verified once.",
+    scene: <SecureSignInScene />,
+    title: (
+      <>
+        Your identity, <span className="ndi-wave-text">verified once</span>.
+      </>
+    ),
     lead: "NGOTAG Studio is where issuers manage credentials on the Bhutan National Digital Identity network.",
   },
   "login-method": {
-    scene: "passkey",
-    title: "Sign in the way that suits you.",
-    lead: "A passkey binds your session to this device with your fingerprint, face, or screen lock — no password to remember.",
+    scene: <PasskeyScene />,
+    title: (
+      <>
+        Sign in <span className="ndi-wave-text">without a password</span>.
+      </>
+    ),
+    lead: "A passkey binds your session to this device with your fingerprint, face, or screen lock — nothing to remember, nothing to phish.",
   },
   "signup-name": {
-    scene: "sign-in",
-    title: "Set up your issuer account.",
+    scene: <SecureSignInScene />,
+    title: (
+      <>
+        Set up your <span className="ndi-wave-text">issuer account</span>.
+      </>
+    ),
     lead: "Your name identifies you to the organisations you issue and verify credentials for.",
   },
   "signup-method": {
-    scene: "passkey",
-    title: "Choose how you sign in.",
+    scene: <PasskeyScene />,
+    title: (
+      <>
+        Choose how you <span className="ndi-wave-text">sign in</span>.
+      </>
+    ),
     lead: "Passkeys are the recommended method — encrypted, phishing-resistant, and portable across your devices.",
   },
 };
@@ -36,57 +54,105 @@ const BRAND_COPY: Record<AuthStep, { scene: BrandScene; title: string; lead: str
 export function AuthFlow() {
   const [step, setStep] = useState<AuthStep>("login-email");
   const [email, setEmail] = useState("");
-  const [toast, setToast] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
-  const handleMethodSelect = (method: AuthMethod) => {
-    setToast(`${method === "passkey" ? "Passkey" : "Password"} authentication selected.`);
+  const chooseMethod = (method: AuthMethod) => {
+    setNotice(
+      method === "passkey"
+        ? "Passkey selected — this is a design build, so no credential was created."
+        : "Password selected — this is a design build, so nothing was submitted.",
+    );
   };
 
-  const brand = BRAND_COPY[step];
+  const rail = RAIL[step];
 
   return (
-    <AuthLayout brandScene={brand.scene} brandTitle={brand.title} brandLead={brand.lead}>
-      {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
+    <AuthShell scene={rail.scene} title={rail.title} lead={rail.lead}>
+      {/* Status line, following the website's inline role="status" pattern
+          rather than a floating toast — the site ships no toast component. */}
+      {notice ? (
+        <p
+          role="status"
+          aria-live="polite"
+          className="relative z-[4] mb-5 flex items-start gap-2 rounded-xl border border-grid bg-[var(--ndi-mint-08)] px-3.5 py-3 text-[13px] leading-[1.5] text-accent"
+        >
+          <Icon name="check" size={14} strokeWidth={2.2} className="mt-px flex-none" />
+          <span className="flex-1">{notice}</span>
+          <button
+            type="button"
+            onClick={() => setNotice(null)}
+            aria-label="Dismiss"
+            className="ndi-plainlink -mr-1 flex-none text-faint"
+          >
+            <Icon name="close" size={14} strokeWidth={2} />
+          </button>
+        </p>
+      ) : null}
 
-      {step === "login-email" && (
+      {step === "login-email" ? (
         <LoginEmailStep
           initialEmail={email}
           onNext={(value) => {
             setEmail(value);
+            setNotice(null);
             setStep("login-method");
           }}
-          onCreateAccount={() => setStep("signup-name")}
+          onCreateAccount={() => {
+            setNotice(null);
+            setStep("signup-name");
+          }}
         />
-      )}
+      ) : null}
 
-      {step === "login-method" && (
+      {step === "login-method" ? (
         <LoginMethodStep
           email={email}
-          onSelect={handleMethodSelect}
-          onCreateAccount={() => setStep("signup-name")}
-          onBack={() => setStep("login-email")}
-        />
-      )}
-
-      {step === "signup-name" && (
-        <SignupNameStep
-          onContinue={() => setStep("signup-method")}
-          onLogin={() => setStep("login-email")}
-          onBack={() => setStep("login-email")}
-        />
-      )}
-
-      {step === "signup-method" && (
-        <SignupMethodStep
-          onSelect={(method) => {
-            handleMethodSelect(method);
-            setToast("Congratulations! You have successfully registered on NGOTAG.");
+          onSelect={chooseMethod}
+          onCreateAccount={() => {
+            setNotice(null);
+            setStep("signup-name");
+          }}
+          onBack={() => {
+            setNotice(null);
             setStep("login-email");
           }}
-          onLogin={() => setStep("login-email")}
-          onBack={() => setStep("signup-name")}
         />
-      )}
-    </AuthLayout>
+      ) : null}
+
+      {step === "signup-name" ? (
+        <SignupNameStep
+          onContinue={() => {
+            setNotice(null);
+            setStep("signup-method");
+          }}
+          onLogin={() => {
+            setNotice(null);
+            setStep("login-email");
+          }}
+          onBack={() => {
+            setNotice(null);
+            setStep("login-email");
+          }}
+        />
+      ) : null}
+
+      {step === "signup-method" ? (
+        <SignupMethodStep
+          onSelect={(method) => {
+            chooseMethod(method);
+            setNotice("Congratulations — your NGOTAG account is registered. Sign in to continue.");
+            setStep("login-email");
+          }}
+          onLogin={() => {
+            setNotice(null);
+            setStep("login-email");
+          }}
+          onBack={() => {
+            setNotice(null);
+            setStep("signup-name");
+          }}
+        />
+      ) : null}
+    </AuthShell>
   );
 }

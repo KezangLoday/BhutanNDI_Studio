@@ -1,52 +1,59 @@
 "use client";
 
 import { useState } from "react";
-import { StepHeader } from "@/components/AuthLayout";
-import { Button } from "@/components/Button";
-import { TextField } from "@/components/TextField";
-import { ArrowRightIcon, MailIcon } from "@/components/icons";
-import "./auth.css";
+
+import { StepHeader } from "@/components/layout/AuthShell";
+import { GradientButton } from "@/components/ui/GradientButton";
+import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
+import { Icon } from "@/components/ui/icons";
 
 interface LoginEmailStepProps {
   initialEmail?: string;
   onNext: (email: string) => void;
   onCreateAccount: () => void;
-  onBack?: () => void;
 }
 
-export function LoginEmailStep({ initialEmail = "", onNext, onCreateAccount, onBack }: LoginEmailStepProps) {
+export function LoginEmailStep({ initialEmail = "", onNext, onCreateAccount }: LoginEmailStepProps) {
   const [email, setEmail] = useState(initialEmail);
 
   return (
     <>
-      <StepHeader title="Login" subtitle="Enter your email to login" onBack={onBack} />
+      <StepHeader title="Login" subtitle="Enter your email to login" />
 
       <form
-        className="ndi-auth-form"
+        className="relative z-[4] flex flex-col gap-[18px]"
         onSubmit={(event) => {
           event.preventDefault();
           onNext(email);
         }}
       >
-        <TextField
-          label="Your Email"
-          required
-          type="email"
-          name="email"
-          autoComplete="email"
-          placeholder="name@company.com"
-          icon={<MailIcon />}
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
+        <label className={FIELD_BLOCK_CLASS}>
+          <span className={LABEL_CLASS}>Your email</span>
+          <div className="relative flex items-center">
+            <span className="pointer-events-none absolute left-[14px] text-faint">
+              <Icon name="mail" size={16} strokeWidth={1.8} />
+            </span>
+            <input
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              placeholder="name@company.bt"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className={`${FIELD_CLASS} h-12 pl-[42px]`}
+            />
+          </div>
+        </label>
 
-        <div className="ndi-auth-actions">
-          <button type="button" className="ndi-auth-link" onClick={onCreateAccount}>
+        <div className="mt-1 flex flex-wrap items-center justify-between gap-4">
+          <button type="button" onClick={onCreateAccount} className="ndi-plainlink text-sm text-accent">
             Create an account
           </button>
-          <Button type="submit" icon={<ArrowRightIcon />} disabled={!email.trim()}>
+          <GradientButton type="submit" disabled={!email.trim()}>
             Next
-          </Button>
+            <Icon name="arrowRight" size={16} strokeWidth={1.9} className="ndi-sendnudge" />
+          </GradientButton>
         </div>
       </form>
     </>

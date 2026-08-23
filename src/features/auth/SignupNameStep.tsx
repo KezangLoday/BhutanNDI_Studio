@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { StepHeader } from "@/components/AuthLayout";
-import { Button } from "@/components/Button";
-import { TextField } from "@/components/TextField";
-import { ArrowRightIcon } from "@/components/icons";
-import "./auth.css";
+
+import { StepHeader } from "@/components/layout/AuthShell";
+import { GradientButton } from "@/components/ui/GradientButton";
+import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
+import { Icon } from "@/components/ui/icons";
 
 interface SignupNameStepProps {
   onContinue: (firstName: string, lastName: string) => void;
@@ -22,38 +22,46 @@ export function SignupNameStep({ onContinue, onLogin, onBack }: SignupNameStepPr
       <StepHeader title="Create account" subtitle="Please enter your details" onBack={onBack} />
 
       <form
-        className="ndi-auth-form"
+        className="relative z-[4] flex flex-col gap-[18px]"
         onSubmit={(event) => {
           event.preventDefault();
           onContinue(firstName, lastName);
         }}
       >
-        <TextField
-          label="First name"
-          required
-          name="firstName"
-          autoComplete="given-name"
-          placeholder="Kezang"
-          value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
-        />
-        <TextField
-          label="Last name"
-          required
-          name="lastName"
-          autoComplete="family-name"
-          placeholder="Loday"
-          value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
-        />
+        <label className={FIELD_BLOCK_CLASS}>
+          <span className={LABEL_CLASS}>First name</span>
+          <input
+            name="firstName"
+            required
+            autoComplete="given-name"
+            placeholder="Kezang"
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+            className={`${FIELD_CLASS} h-12`}
+          />
+        </label>
 
-        <div className="ndi-auth-actions">
-          <button type="button" className="ndi-auth-link" onClick={onLogin}>
+        <label className={FIELD_BLOCK_CLASS}>
+          <span className={LABEL_CLASS}>Last name</span>
+          <input
+            name="lastName"
+            required
+            autoComplete="family-name"
+            placeholder="Loday"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+            className={`${FIELD_CLASS} h-12`}
+          />
+        </label>
+
+        <div className="mt-1 flex flex-wrap items-center justify-between gap-4">
+          <button type="button" onClick={onLogin} className="ndi-plainlink text-sm text-accent">
             Login here
           </button>
-          <Button type="submit" icon={<ArrowRightIcon />} disabled={!firstName.trim() || !lastName.trim()}>
+          <GradientButton type="submit" disabled={!firstName.trim() || !lastName.trim()}>
             Continue
-          </Button>
+            <Icon name="arrowRight" size={16} strokeWidth={1.9} className="ndi-sendnudge" />
+          </GradientButton>
         </div>
       </form>
     </>

@@ -1,10 +1,12 @@
 # NGOTAG Studio — Bhutan NDI auth redesign
 
-The Studio auth flow rebuilt in React + TypeScript against the Bhutan NDI
-website design system. Functionality and step order match the existing Studio
-screens exactly; only the visual layer changed.
+The Studio auth flow rebuilt to match the Bhutan NDI website's shipped design
+system. Functionality and step order match the existing Studio screens; only
+the visual layer changed.
 
-Built on **Next.js 14 (App Router)**, matching the NDI website's stack.
+Built on the **same stack as the website** — Next.js 16 (App Router), React 19,
+Tailwind v4 (CSS-first, no config file) — so these components drop into the
+Studio without translation.
 
 ## Run
 
@@ -18,45 +20,65 @@ npm run typecheck
 ## Structure
 
 ```
-src/app/layout.tsx           root layout; loads Inter + DM Mono via next/font
-src/app/page.tsx             renders AuthFlow
-src/styles/tokens.css        every design-system token as a CSS custom property
-src/styles/global.css        resets, eyebrow + mint-wave utilities
-src/components/              AuthLayout, BrandPanel, Button, TextField, Toast, icons, illustrations
-src/features/auth/           the four steps + AuthFlow orchestrator
+src/app/globals.css            tokens + @theme bridge — copied from the website's globals.css
+src/app/layout.tsx             Host Grotesk / Inter / DM Mono via next/font, Atmosphere
+src/styles/ndi-effects.css     the auth-relevant subset of the website's ndi-effects.css
+src/components/layout/         Atmosphere, AuthHeader (glass pill), AuthShell + StepHeader
+src/components/ui/             GradientButton, ShinyButton, HairlineButton, formStyles, icons, Eyebrow, scenes
+src/features/auth/             the four steps + AuthFlow orchestrator
+public/media/logos/            ndi-mark.png (cropped from the official lockup), ndi-horizontal-white.png
 ```
 
-Imports use the `@/*` alias mapped to `src/*`. Components that own state or
-take event handlers carry `"use client"`, so they are safe to import from a
-server component anywhere in the tree. `BrandPanel`, `icons` and
-`illustrations` are pure and stay server-renderable.
+`AuthFlow` owns the step state (`login-email` → `login-method`,
+`signup-name` → `signup-method`) and the email value. Each step is
+presentational and takes callbacks, so wiring the real API means replacing the
+`onNext` / `onSelect` / `onContinue` handlers in `AuthFlow.tsx` and nothing else.
 
-`AuthFlow` holds the step state (`login-email` → `login-method`,
-`signup-name` → `signup-method`) and the email value. Each step is a pure
-presentational component taking callbacks, so wiring it to the real Studio
-API means replacing the `onNext` / `onSelect` / `onContinue` handlers in
-`AuthFlow.tsx` and nothing else.
+## What came from the website, verbatim
 
-## What changed from the old screens
-
-| Before | After |
+| Concern | Source |
 |---|---|
-| Light theme, `#1e3a8a` blue | Dark obsidian ground, single mint accent |
-| Blue raster clipart illustration | Drawn mint line scenes (`illustrations.tsx`), one per step |
-| Grey filled inputs | `--surface-raised` fields, mint hairline border, mint focus ring |
-| Flat blue buttons | Mint gradient primary with hover lift + sweep; outline secondary |
-| Green banner alert | Glass toast with mint rim and glow |
-| Static left panel | Panel copy and illustration change per step |
+| Every token, and the `@theme inline` bridge | `src/app/(frontend)/globals.css` |
+| `.ndi-field`, `.ndi-chip`, `.ndi-check`, `.ndi-sweepbtn`, sweep/glow, `.ndi-wave-text`, glass panel + lens rim, `.shiny-cta` | `src/styles/ndi-effects.css` |
+| `FIELD_CLASS`, `LABEL_CLASS`, `FIELD_BLOCK_CLASS` | `src/components/ui/formStyles.ts` |
+| `GradientButton` ramp, `ShinyButton` | `src/components/ui/*.tsx` |
+| Header pill geometry and glass | `src/components/layout/SiteHeader.tsx` |
+| `Atmosphere` ground + edge pools | `src/components/layout/Atmosphere.tsx` |
+| Eyebrow, heading scale, `PageSection` widths | `SectionHeader.tsx`, `PageHero.tsx` |
+
+## Where this deviates, and why
+
+Three places the website had no precedent, so the treatment is extrapolated
+from its existing vocabulary — flag these if you'd rather they changed:
+
+- **`HairlineButton`** — the website ships no outline/secondary button. This
+  applies the chip's checked state and the mobile sheet's social-tile hover
+  (1px mint border over a 2% white fill, hover to mint 8% + `--glow-sm`).
+- **Disabled CTA** — the website's only disabled submit uses
+  `disabled:opacity-70` mid-submit. A permanently disabled Next button at
+  reduced opacity still read as pressable, so disabled drops the gradient for
+  a flat `--surface-raised` fill.
+- **Status line, not a toast** — the website has no toast component; status is
+  inline `role="status"` with an icon. The success notice follows that.
+
+The left-rail illustrations (`scenes.tsx`) and headline copy are new — the
+originals were generic blue stock art, and the site has no auth pages to
+borrow from. Worth a review pass.
 
 ## Notes for the dev team
 
-- **Fonts.** Inter and DM Mono load through `next/font/google` in
-  `app/layout.tsx`, which exposes them as `--font-inter` / `--font-dm-mono`.
-  **Host Grotesk is not on Google Fonts** — self-host it (e.g. `next/font/local`)
-  and add it to `--font-display` in `tokens.css`; until then display text falls
-  back to Inter.
-- **Tokens over literals.** No component hard-codes a colour. Restyle by
-  editing `tokens.css` only.
-- All buttons are ≥44px tall and hover displacement is neutralised under
-  `@media (hover: none)`, per the design system's touch rules.
-- Motion collapses under `prefers-reduced-motion: reduce`.
+- **No colour is hard-coded in a component.** Restyle by editing
+  `globals.css` only.
+- **Tailwind v4 is CSS-first** — there is deliberately no `tailwind.config`,
+  matching the website. Utilities like `bg-raised`, `text-muted`,
+  `border-grid`, `font-display` come from the `@theme` blocks.
+- **`ndi-effects.css` is a subset.** Pulling in another website effect
+  (spotlight cards, circuit field, reveal-on-scroll) means copying that
+  section across plus its one-line hook.
+- `@property` registration for `--gradient-angle` is load-bearing for
+  `ShinyButton`; without it the conic angle jumps instead of interpolating.
+- 44px+ touch targets, hover displacement neutralised under
+  `@media (hover: none)`, motion collapsed under `prefers-reduced-motion`.
+- The logo is `ndi-mark.png`, cropped from the official
+  `ndi-horizontal-white.png`. If you have the mark as SVG, swap it in — it
+  will scale better than a 400px raster at 34px.
