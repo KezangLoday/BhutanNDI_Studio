@@ -17,7 +17,7 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
     scene: <SecureSignInScene />,
     title: (
       <>
-        Your identity, <span className="ndi-wave-text">verified once</span>.
+        Your identity, <span className="ndi-wave-text">verified once</span>
       </>
     ),
     lead: "NGOTAG Studio is where issuers manage credentials on the Bhutan National Digital Identity network.",
@@ -26,7 +26,7 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
     scene: <PasskeyScene />,
     title: (
       <>
-        Sign in <span className="ndi-wave-text">without a password</span>.
+        Sign in <span className="ndi-wave-text">without a password</span>
       </>
     ),
     lead: "A passkey binds your session to this device with your fingerprint, face, or screen lock — nothing to remember, nothing to phish.",
@@ -35,7 +35,7 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
     scene: <SecureSignInScene />,
     title: (
       <>
-        Set up your <span className="ndi-wave-text">issuer account</span>.
+        Set up your <span className="ndi-wave-text">issuer account</span>
       </>
     ),
     lead: "Your name identifies you to the organisations you issue and verify credentials for.",
@@ -44,7 +44,7 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
     scene: <PasskeyScene />,
     title: (
       <>
-        Choose how you <span className="ndi-wave-text">sign in</span>.
+        Choose how you <span className="ndi-wave-text">sign in</span>
       </>
     ),
     lead: "Passkeys are the recommended method — encrypted, phishing-resistant, and portable across your devices.",
