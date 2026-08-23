@@ -198,3 +198,77 @@ export function PasskeyScene() {
     </svg>
   );
 }
+
+/** Password: a lock badge over a masked entry field, on a stack of documents. */
+export function PasswordScene() {
+  return (
+    <svg
+      viewBox="26 30 366 250"
+      fill="none"
+      className="ndi-scene block h-auto w-full"
+      role="img"
+      aria-label="A password prompt guarding a stack of records"
+    >
+      <ScanlineDef />
+
+      {/* Records behind */}
+      <rect x="46" y="44" width="150" height="106" rx="10" stroke={STROKE_DIM} strokeWidth="1.7" />
+      <path d="M64 70h58M64 88h44M64 106h52" stroke={STROKE_DIM} strokeWidth="1.7" strokeLinecap="round" />
+
+      <rect x="228" y="60" width="150" height="106" rx="10" stroke={STROKE_DIM} strokeWidth="1.7" />
+      <path d="M246 86h58M246 104h44M246 122h52" stroke={STROKE_DIM} strokeWidth="1.7" strokeLinecap="round" />
+
+      {/* The prompt */}
+      <rect
+        x="104"
+        y="112"
+        width="216"
+        height="140"
+        rx="14"
+        fill={FILL_GLASS}
+        stroke={STROKE}
+        strokeWidth="1.7"
+      />
+
+      <g className="ndi-scene__seal">
+        <circle cx="212" cy="146" r="26" fill="rgba(12,17,27,0.92)" stroke={STROKE} strokeWidth="1.7" />
+        <rect x="202" y="143" width="20" height="14" rx="5" stroke={STROKE} strokeWidth="1.7" />
+        <path d="M206 143v-3.6a6 6 0 0 1 12 0v3.6" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
+        <path d="M212 149v3" stroke="var(--ndi-mint-bright)" strokeWidth="1.7" strokeLinecap="round" />
+      </g>
+
+      {/* Masked entry */}
+      <rect x="132" y="192" width="160" height="30" rx="8" stroke={STROKE} strokeWidth="1.7" />
+      {[0, 1, 2, 3, 4].map((i) => (
+        <circle
+          key={i}
+          cx={150 + i * 18}
+          cy={207}
+          r="3.4"
+          fill="var(--ndi-mint)"
+          fillOpacity={i < 4 ? 0.85 : 0.2}
+        />
+      ))}
+      <rect
+        className="ndi-scene__scan"
+        x="138"
+        y="228"
+        width="60"
+        height="2"
+        rx="1"
+        fill="url(#ndiScanline)"
+      />
+
+      {/* Trace nodes */}
+      <circle cx="40" cy="188" r="4" stroke={STROKE_DIM} strokeWidth="1.7" />
+      <circle cx="384" cy="204" r="4" stroke={STROKE_DIM} strokeWidth="1.7" />
+      <path
+        d="M40 188h60M384 204h-58"
+        stroke={STROKE_DIM}
+        strokeWidth="1.7"
+        strokeDasharray="3 5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}

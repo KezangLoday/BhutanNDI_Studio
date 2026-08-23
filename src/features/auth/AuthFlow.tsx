@@ -1,13 +1,15 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 
 import { AuthShell } from "@/components/layout/AuthShell";
 import { Icon } from "@/components/ui/icons";
-import { PasskeyScene, SecureSignInScene } from "@/components/ui/scenes";
+import { PasskeyScene, PasswordScene, SecureSignInScene } from "@/components/ui/scenes";
 
 import { LoginEmailStep } from "./LoginEmailStep";
 import { LoginMethodStep } from "./LoginMethodStep";
+import { LoginPasswordStep } from "./LoginPasswordStep";
 import { SignupMethodStep } from "./SignupMethodStep";
 import { SignupNameStep } from "./SignupNameStep";
 import type { AuthMethod, AuthStep } from "./authTypes";
@@ -31,6 +33,15 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
     ),
     lead: "A passkey binds your session to this device with your fingerprint, face, or screen lock — nothing to remember, nothing to phish.",
   },
+  "login-password": {
+    scene: <PasswordScene />,
+    title: (
+      <>
+        Welcome back to <span className="ndi-wave-text">NDI Studio</span>
+      </>
+    ),
+    lead: "Enter your password to reach your organizations, schemas and credential definitions.",
+  },
   "signup-name": {
     scene: <SecureSignInScene />,
     title: (
@@ -52,16 +63,26 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
 };
 
 export function AuthFlow() {
+  const router = useRouter();
   const [step, setStep] = useState<AuthStep>("login-email");
   const [email, setEmail] = useState("");
   const [notice, setNotice] = useState<string | null>(null);
 
-  const chooseMethod = (method: AuthMethod) => {
-    setNotice(
-      method === "passkey"
-        ? "Passkey selected — this is a design build, so no credential was created."
-        : "Password selected — this is a design build, so nothing was submitted.",
-    );
+  /** Every transition clears the notice — a stale success line on a new step
+   *  reads as though it belongs to that step. */
+  const go = (next: AuthStep) => {
+    setNotice(null);
+    setStep(next);
+  };
+
+  const chooseLoginMethod = (method: AuthMethod) => {
+    if (method === "password") {
+      go("login-password");
+      return;
+    }
+    // No WebAuthn ceremony in a design build, so the passkey path lands where
+    // a successful one would.
+    router.push("/dashboard");
   };
 
   const rail = RAIL[step];
@@ -94,65 +115,51 @@ export function AuthFlow() {
           initialEmail={email}
           onNext={(value) => {
             setEmail(value);
-            setNotice(null);
-            setStep("login-method");
+            go("login-method");
           }}
-          onCreateAccount={() => {
-            setNotice(null);
-            setStep("signup-name");
-          }}
+          onCreateAccount={() => go("signup-name")}
         />
       ) : null}
 
       {step === "login-method" ? (
         <LoginMethodStep
           email={email}
-          onSelect={chooseMethod}
-          onCreateAccount={() => {
-            setNotice(null);
-            setStep("signup-name");
-          }}
-          onBack={() => {
-            setNotice(null);
-            setStep("login-email");
-          }}
+          onSelect={chooseLoginMethod}
+          onCreateAccount={() => go("signup-name")}
+          onBack={() => go("login-email")}
+        />
+      ) : null}
+
+      {step === "login-password" ? (
+        <LoginPasswordStep
+          email={email}
+          onSubmit={() => router.push("/dashboard")}
+          onForgotPassword={() =>
+            setNotice("Password reset is not wired up in this design build.")
+          }
+          onCreateAccount={() => go("signup-name")}
+          onBack={() => go("login-method")}
         />
       ) : null}
 
       {step === "signup-name" ? (
         <SignupNameStep
-          onContinue={() => {
-            setNotice(null);
-            setStep("signup-method");
-          }}
-          onLogin={() => {
-            setNotice(null);
-            setStep("login-email");
-          }}
-          onBack={() => {
-            setNotice(null);
-            setStep("login-email");
-          }}
+          onContinue={() => go("signup-method")}
+          onLogin={() => go("login-email")}
+          onBack={() => go("login-email")}
         />
       ) : null}
 
       {step === "signup-method" ? (
         <SignupMethodStep
-          onSelect={(method) => {
-            chooseMethod(method);
+          onSelect={() => {
+            setStep("login-email");
             setNotice(
               "Congratulations — your NDI Studio account is registered. Sign in to continue.",
             );
-            setStep("login-email");
           }}
-          onLogin={() => {
-            setNotice(null);
-            setStep("login-email");
-          }}
-          onBack={() => {
-            setNotice(null);
-            setStep("signup-name");
-          }}
+          onLogin={() => go("login-email")}
+          onBack={() => go("signup-name")}
         />
       ) : null}
     </AuthShell>

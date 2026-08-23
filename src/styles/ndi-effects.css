@@ -533,3 +533,82 @@ select option {
     transform: translateY(-6px);
   }
 }
+
+/* ---- Sidebar nav rows -------------------------------------- */
+/* The same active treatment as the site's nav — a mint gradient on the label
+   — but on a filled row, since a sidebar row is a target, not a link in prose. */
+.ndi-navrow {
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  transition: color var(--dur) var(--ease-out), background var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+.ndi-navrow:hover {
+  color: var(--text-strong);
+  background: rgba(255, 255, 255, 0.04);
+}
+.ndi-navrow:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+.ndi-navrow[data-active="1"] {
+  color: var(--accent);
+  border-color: rgba(90, 201, 148, 0.32);
+  background: var(--ndi-mint-12);
+}
+.ndi-navrow[data-active="1"] svg {
+  color: var(--accent);
+}
+
+.ndi-navdot {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+/* ---- Info tooltip ------------------------------------------ */
+.ndi-tip {
+  position: relative;
+  display: inline-flex;
+}
+.ndi-tip__bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 20;
+  width: max-content;
+  max-width: 240px;
+  transform: translateX(-50%) translateY(4px);
+  padding: 8px 11px;
+  border-radius: 9px;
+  border: 1px solid rgba(90, 201, 148, 0.22);
+  background: #0f1522;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: var(--text-body);
+  font-size: 12px;
+  line-height: 1.45;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s var(--ease-out), transform 0.18s var(--ease-out),
+    visibility 0s linear 0.18s;
+}
+.ndi-tip:hover .ndi-tip__bubble,
+.ndi-tip:focus-within .ndi-tip__bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  transition-delay: 0s;
+}
+
+/* ---- Sidebar drawer, mobile -------------------------------- */
+@media (max-width: 900px) {
+  aside[data-open="0"] {
+    transform: translateX(-100%);
+  }
+}
