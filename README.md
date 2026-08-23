@@ -1,8 +1,12 @@
-# NGOTAG Studio — Bhutan NDI auth redesign
+# NDI Studio — Bhutan NDI auth redesign
 
 The Studio auth flow rebuilt to match the Bhutan NDI website's shipped design
 system. Functionality and step order match the existing Studio screens; only
 the visual layer changed.
+
+> **Renamed from NGOTAG.** The product is NDI Studio as of this branch. If you
+> find a stray "NGOTAG" anywhere — copy, env var, API response, email template
+> — it is a leftover, not a deliberate distinction.
 
 Built on the **same stack as the website** — Next.js 16 (App Router), React 19,
 Tailwind v4 (CSS-first, no config file) — so these components drop into the

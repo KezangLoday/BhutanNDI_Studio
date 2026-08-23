@@ -20,7 +20,7 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
         Your identity, <span className="ndi-wave-text">verified once</span>
       </>
     ),
-    lead: "NGOTAG Studio is where issuers manage credentials on the Bhutan National Digital Identity network.",
+    lead: "NDI Studio is where issuers manage credentials on the Bhutan National Digital Identity network.",
   },
   "login-method": {
     scene: <PasskeyScene />,
@@ -140,7 +140,9 @@ export function AuthFlow() {
         <SignupMethodStep
           onSelect={(method) => {
             chooseMethod(method);
-            setNotice("Congratulations — your NGOTAG account is registered. Sign in to continue.");
+            setNotice(
+              "Congratulations — your NDI Studio account is registered. Sign in to continue.",
+            );
             setStep("login-email");
           }}
           onLogin={() => {

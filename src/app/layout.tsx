@@ -25,7 +25,7 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NGOTAG Studio — Bhutan NDI",
+  title: "NDI Studio — Bhutan NDI",
   description:
     "Issue and verify credentials on the Bhutan National Digital Identity network.",
 };
