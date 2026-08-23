@@ -12,6 +12,7 @@ import { LoginMethodStep } from "./LoginMethodStep";
 import { LoginPasswordStep } from "./LoginPasswordStep";
 import { SignupMethodStep } from "./SignupMethodStep";
 import { SignupNameStep } from "./SignupNameStep";
+import { SignupPasswordStep } from "./SignupPasswordStep";
 import type { AuthMethod, AuthStep } from "./authTypes";
 
 const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string }> = {
@@ -60,7 +61,19 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
     ),
     lead: "Passkeys are the recommended method — encrypted, phishing-resistant, and portable across your devices.",
   },
+  "signup-password": {
+    scene: <PasswordScene />,
+    title: (
+      <>
+        Set a password you <span className="ndi-wave-text">won&rsquo;t reuse</span>
+      </>
+    ),
+    lead: "It guards every credential you issue, so give it length over cleverness — a passphrase beats a short password with symbols in it.",
+  },
 };
+
+const registeredNotice =
+  "Congratulations — your NDI Studio account is registered. Sign in to continue.";
 
 export function AuthFlow() {
   const router = useRouter();
@@ -117,7 +130,10 @@ export function AuthFlow() {
             setEmail(value);
             go("login-method");
           }}
-          onCreateAccount={() => go("signup-name")}
+          onCreateAccount={(value) => {
+            setEmail(value);
+            go("signup-name");
+          }}
         />
       ) : null}
 
@@ -152,14 +168,29 @@ export function AuthFlow() {
 
       {step === "signup-method" ? (
         <SignupMethodStep
-          onSelect={() => {
+          onSelect={(method) => {
+            /* A password has to be set before the account exists; a passkey is
+               created by the ceremony itself, so that path completes here. */
+            if (method === "password") {
+              go("signup-password");
+              return;
+            }
             setStep("login-email");
-            setNotice(
-              "Congratulations — your NDI Studio account is registered. Sign in to continue.",
-            );
+            setNotice(registeredNotice);
           }}
           onLogin={() => go("login-email")}
           onBack={() => go("signup-name")}
+        />
+      ) : null}
+
+      {step === "signup-password" ? (
+        <SignupPasswordStep
+          email={email}
+          onSubmit={() => {
+            setStep("login-email");
+            setNotice(registeredNotice);
+          }}
+          onBack={() => go("signup-method")}
         />
       ) : null}
     </AuthShell>

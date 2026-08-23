@@ -10,7 +10,9 @@ import { Icon } from "@/components/ui/icons";
 interface LoginEmailStepProps {
   initialEmail?: string;
   onNext: (email: string) => void;
-  onCreateAccount: () => void;
+  /** Carries whatever is typed, so the address survives the signup detour and
+   *  is still there on the login screen afterwards. */
+  onCreateAccount: (email: string) => void;
 }
 
 export function LoginEmailStep({ initialEmail = "", onNext, onCreateAccount }: LoginEmailStepProps) {
@@ -47,7 +49,11 @@ export function LoginEmailStep({ initialEmail = "", onNext, onCreateAccount }: L
         </label>
 
         <div className="mt-1 flex flex-wrap items-center justify-between gap-4">
-          <button type="button" onClick={onCreateAccount} className="ndi-plainlink text-sm text-accent">
+          <button
+            type="button"
+            onClick={() => onCreateAccount(email)}
+            className="ndi-plainlink text-sm text-accent"
+          >
             Create an account
           </button>
           <GradientButton type="submit" disabled={!email.trim()}>
