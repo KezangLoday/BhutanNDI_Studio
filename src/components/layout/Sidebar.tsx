@@ -33,7 +33,7 @@ const PRIMARY: NavItem[] = [
     children: [
       { label: "All credentials", href: "/credentials", icon: "credentials" },
       { label: "Issue", href: "/credentials/issue", icon: "issue" },
-      { label: "Verify", href: "/credentials/verify", icon: "verify" },
+      { label: "Verify", href: "/verification", icon: "verify" },
     ],
   },
   { label: "Schemas", icon: "layers", href: "/schemas" },

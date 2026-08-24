@@ -1,11 +1,7 @@
-import type { Metadata } from "next";
+/* Verification lives under /verification, matching the reference. This path is
+   kept because the earlier build linked to it. */
+import { redirect } from "next/navigation";
 
-import { WalletGate } from "@/features/credentials/WalletGate";
-
-export const metadata: Metadata = {
-  title: "Verify credentials — NDI Studio",
-};
-
-export default function VerifyPage() {
-  return <WalletGate title="Verification list" crumbLabel="Verify" />;
+export default function VerifyRedirectPage(): never {
+  redirect("/verification");
 }
