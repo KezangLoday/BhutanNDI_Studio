@@ -31,11 +31,30 @@ const PRIMARY: NavItem[] = [
     label: "Credentials",
     icon: "credentials",
     children: [
+      { label: "All credentials", href: "/credentials", icon: "credentials" },
       { label: "Issue", href: "/credentials/issue", icon: "issue" },
       { label: "Verify", href: "/credentials/verify", icon: "verify" },
     ],
   },
+  { label: "Schemas", icon: "layers", href: "/schemas" },
+  {
+    /* DIDs and x509 are both answers to "what does a relying party trust
+       here", so they group rather than sitting as two loose rows. */
+    label: "Trust",
+    icon: "shieldCheck",
+    children: [
+      { label: "DIDs", href: "/did-details", icon: "fingerprint" },
+      { label: "x509", href: "/x509-certificate", icon: "certificate" },
+    ],
+  },
   { label: "Ecosystems", icon: "ecosystems", href: "/ecosystems" },
+  { label: "Billing", icon: "creditCard", href: "/organizations/billing" },
+];
+
+const ACCOUNT: NavItem[] = [
+  { label: "Profile", icon: "user", href: "/profile" },
+  { label: "Invitations", icon: "mail", href: "/invitations" },
+  { label: "Developer settings", icon: "key", href: "/developers-setting" },
 ];
 
 const SECONDARY: NavItem[] = [
@@ -135,6 +154,27 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
               );
             }
 
+            const href = item.href ?? "#";
+            return (
+              <Link
+                key={item.label}
+                href={href}
+                onClick={onClose}
+                aria-current={isCurrent(href) ? "page" : undefined}
+                className="ndi-navrow flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 font-display text-[13.5px] font-medium"
+                data-active={isCurrent(href) ? "1" : "0"}
+              >
+                <Icon name={item.icon} size={18} strokeWidth={1.7} className="flex-none" />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="my-4 h-px bg-[var(--border-subtle)]" />
+
+        <nav aria-label="Account" className="flex flex-col gap-0.5">
+          {ACCOUNT.map((item) => {
             const href = item.href ?? "#";
             return (
               <Link
