@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Mono, Host_Grotesk, Inter } from "next/font/google";
 
 import { Atmosphere } from "@/components/layout/Atmosphere";
+import { DemoProvider } from "@/lib/demoStore";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 import "./globals.css";
@@ -47,12 +48,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {/* isolate creates the stacking context the atmosphere layers sit behind */}
-        <div className="relative isolate min-h-screen">
-          <Atmosphere />
-          {/* overflow-x-clip, not hidden: hidden would create a scroll container
-              and break sticky positioning. */}
-          <div className="relative z-[1] overflow-x-clip">{children}</div>
-        </div>
+        {/* Everything the app lists or creates lives in this store. There is
+            no backend by design: the Studio's front end runs against an
+            in-browser model so the whole product can be driven in a demo. */}
+        <DemoProvider>
+          <div className="relative isolate min-h-screen">
+            <Atmosphere />
+            {/* overflow-x-clip, not hidden: hidden would create a scroll container
+                and break sticky positioning. */}
+            <div className="relative z-[1] overflow-x-clip">{children}</div>
+          </div>
+        </DemoProvider>
       </body>
     </html>
   );

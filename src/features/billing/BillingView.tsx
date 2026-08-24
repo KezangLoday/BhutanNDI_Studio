@@ -1,3 +1,5 @@
+"use client";
+
 import { AppShell } from "@/components/layout/AppShell";
 import { DataTable } from "@/components/ui/DataTable";
 import { GradientButton } from "@/components/ui/GradientButton";
@@ -6,16 +8,20 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { Toolbar, ToolbarCount } from "@/components/ui/Toolbar";
 import { Icon } from "@/components/ui/icons";
-
-/** What the plan meters, and where this organization stands against each. */
-const USAGE = [
-  { label: "Credentials issued", used: 0, limit: 1000, icon: "credentials" },
-  { label: "Verifications", used: 0, limit: 1000, icon: "verify" },
-  { label: "Schemas", used: 0, limit: 25, icon: "layers" },
-  { label: "Members", used: 1, limit: 10, icon: "users" },
-] as const;
+import { useDemo } from "@/lib/demoStore";
 
 export function BillingView() {
+  const { credentials, verifications, schemas, members } = useDemo();
+
+  /* Metered against what the demo has actually done, so issuing a credential
+     moves the bar rather than leaving a static figure on the page. */
+  const usage = [
+    { label: "Credentials issued", used: credentials.length, limit: 1000, icon: "credentials" },
+    { label: "Verifications", used: verifications.length, limit: 1000, icon: "verify" },
+    { label: "Schemas", used: schemas.length, limit: 25, icon: "layers" },
+    { label: "Members", used: members.length, limit: 10, icon: "users" },
+  ] as const;
+
   return (
     <AppShell>
       <div className="flex flex-col gap-5">
@@ -51,7 +57,7 @@ export function BillingView() {
         </Panel>
 
         <div className="grid gap-5 grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
-          {USAGE.map((row) => {
+          {usage.map((row) => {
             /* Clamped so a plan overage renders a full bar rather than one
                that runs past its track. */
             const pct = Math.min(100, Math.round((row.used / row.limit) * 100));

@@ -10,7 +10,9 @@ import { HairlineButton } from "@/components/ui/HairlineButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { Toolbar, ToolbarCount } from "@/components/ui/Toolbar";
+import { StatusPill } from "@/components/ui/StatusPill";
 import { Icon } from "@/components/ui/icons";
+import { useDemo } from "@/lib/demoStore";
 
 /**
  * The credentials for talking to the agent directly, rather than through this
@@ -19,7 +21,11 @@ import { Icon } from "@/components/ui/icons";
  * a secret already spent.
  */
 export function DevelopersSettingView() {
+  const { apiKeys, addApiKey, revokeApiKey, organizations } = useDemo();
   const [revealed, setRevealed] = useState(false);
+
+  const org = organizations[0];
+  const secret = "ndi_sk_9f2c41ba77de4c08b5e1a63d";
 
   return (
     <AppShell>
@@ -38,15 +44,16 @@ export function DevelopersSettingView() {
         <Panel>
           <DetailList
             items={[
-              { label: "Organization ID", value: "—", mono: true },
-              { label: "Agent endpoint", value: "—", mono: true },
-              { label: "Client ID", value: "—", mono: true },
+              { label: "Organization", value: org ? org.name : "—" },
+              { label: "Organization ID", value: org ? org.id : "—", mono: true },
+              { label: "Agent endpoint", value: "https://agent.bhutanndi.bt/v1", mono: true },
+              { label: "Client ID", value: "ndi_client_4b7a2e91", mono: true },
               {
                 label: "Client secret",
                 value: (
                   <span className="flex flex-wrap items-center gap-2.5">
                     <span className="font-mono text-[12.5px]">
-                      {revealed ? "—" : "•".repeat(20)}
+                      {revealed ? secret : "•".repeat(secret.length)}
                     </span>
                     <button
                       type="button"
@@ -74,29 +81,57 @@ export function DevelopersSettingView() {
 
         <Panel padded={false}>
           <Toolbar
-            left={<ToolbarCount>API keys</ToolbarCount>}
+            left={<ToolbarCount>{apiKeys.length} API keys</ToolbarCount>}
             right={
-              <GradientButton className="h-10 px-3.5 text-[13px]">
+              <GradientButton
+                className="h-10 px-3.5 text-[13px]"
+                onClick={() => addApiKey(`Key ${apiKeys.length + 1}`)}
+              >
                 <Icon name="plus" size={15} strokeWidth={2} />
                 Create key
               </GradientButton>
             }
           />
           <DataTable
-            columns={["Label", "Key", "Created on", "Last used", "Status"]}
+            columns={["Label", "Key", "Created on", "Last used", "Status", ""]}
             empty={{
               icon: "key",
               title: "No API keys yet",
               message:
                 "An API key lets a service issue and verify on your behalf without a browser session. A key is shown once when it is created and never again.",
               action: (
-                <GradientButton>
+                <GradientButton onClick={() => addApiKey(`Key ${apiKeys.length + 1}`)}>
                   <Icon name="plus" size={16} strokeWidth={2} />
                   Create key
                 </GradientButton>
               ),
             }}
-          />
+          >
+            {apiKeys.length
+              ? apiKeys.map((k) => (
+                  <tr key={k.id}>
+                    <td className="text-strong">{k.label}</td>
+                    <td className="font-mono text-[12.5px] text-muted">{k.masked}</td>
+                    <td className="text-muted">{k.createdAt}</td>
+                    <td className="text-muted">{k.lastUsed}</td>
+                    <td>
+                      <StatusPill status={k.status} />
+                    </td>
+                    <td>
+                      {k.status === "active" ? (
+                        <button
+                          type="button"
+                          onClick={() => revokeApiKey(k.id)}
+                          className="ndi-plainlink whitespace-nowrap text-[12.5px] text-muted"
+                        >
+                          Revoke
+                        </button>
+                      ) : null}
+                    </td>
+                  </tr>
+                ))
+              : undefined}
+          </DataTable>
         </Panel>
       </div>
     </AppShell>

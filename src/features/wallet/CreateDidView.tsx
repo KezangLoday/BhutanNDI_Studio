@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { AppShell } from "@/components/layout/AppShell";
@@ -9,6 +10,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
+import { useDemo } from "@/lib/demoStore";
 
 const METHODS = [
   { id: "indy", label: "did:indy", hint: "Anchored on the Bhutan NDI ledger." },
@@ -25,7 +27,11 @@ const KEY_TYPES = ["ed25519", "bls12381g2"];
  * sitting in a select among the rest.
  */
 export function CreateDidView() {
+  const router = useRouter();
+  const { addDid } = useDemo();
   const [method, setMethod] = useState("indy");
+  const [keyType, setKeyType] = useState("ed25519");
+  const [alias, setAlias] = useState("");
 
   return (
     <AppShell>
@@ -71,7 +77,11 @@ export function CreateDidView() {
             <div className="grid gap-4 min-[641px]:grid-cols-2">
               <label className={FIELD_BLOCK_CLASS}>
                 <span className={LABEL_CLASS}>Key type</span>
-                <select className="ndi-select h-12 w-full" defaultValue="ed25519">
+                <select
+                  className="ndi-select h-12 w-full"
+                  value={keyType}
+                  onChange={(e) => setKeyType(e.target.value)}
+                >
                   {KEY_TYPES.map((k) => (
                     <option key={k} value={k}>
                       {k}
@@ -81,7 +91,12 @@ export function CreateDidView() {
               </label>
               <label className={FIELD_BLOCK_CLASS}>
                 <span className={LABEL_CLASS}>Alias</span>
-                <input className={`${FIELD_CLASS} h-12`} placeholder="Issuer key" />
+                <input
+                  className={`${FIELD_CLASS} h-12`}
+                  placeholder="Issuer key"
+                  value={alias}
+                  onChange={(e) => setAlias(e.target.value)}
+                />
               </label>
             </div>
 
@@ -105,11 +120,22 @@ export function CreateDidView() {
             </label>
 
             <div className="flex flex-wrap items-center gap-2.5 border-t border-subtle pt-5">
-              <GradientButton>
+              <GradientButton
+                onClick={() => {
+                  addDid({
+                    method: `did:${method}`,
+                    keyType,
+                    alias: alias.trim() || "Untitled key",
+                  });
+                  router.push("/did-details");
+                }}
+              >
                 <Icon name="fingerprint" size={16} strokeWidth={2} />
                 Create DID
               </GradientButton>
-              <HairlineButton className="h-12">Cancel</HairlineButton>
+              <HairlineButton className="h-12" onClick={() => router.push("/did-details")}>
+                Cancel
+              </HairlineButton>
             </div>
           </div>
         </Panel>

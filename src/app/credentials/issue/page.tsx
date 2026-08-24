@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 
-import { WalletGate } from "@/features/credentials/WalletGate";
+import { IssueMethodView } from "@/features/credentials/IssueMethodView";
 
-export const metadata: Metadata = {
-  title: "Issue credentials — NDI Studio",
-};
+export const metadata: Metadata = { title: "Issue credentials — NDI Studio" };
 
 export default function IssuePage() {
-  return <WalletGate title="Issue credentials" crumbLabel="Issue" />;
+  return <IssueMethodView />;
 }

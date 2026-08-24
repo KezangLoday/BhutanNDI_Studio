@@ -4,7 +4,7 @@ import { Icon, type IconName } from "./icons";
 
 interface StatCardProps {
   title: string;
-  /** Omitted for cards that carry no count, like Recent activity. */
+  /** Omitted for cards that carry no count. */
   count?: number;
   /** The info tooltip's copy. */
   hint?: string;
@@ -12,6 +12,8 @@ interface StatCardProps {
   emptyMessage: string;
   emptyIcon: IconName;
   action?: ReactNode;
+  /** A preview of the first few rows, shown instead of the empty state. */
+  children?: ReactNode;
 }
 
 export function StatCard({
@@ -21,7 +23,12 @@ export function StatCard({
   emptyMessage,
   emptyIcon,
   action,
+  children,
 }: StatCardProps) {
+  /* A card with a count of zero is empty whatever it was handed, and one with
+     rows to show should show them rather than an invitation to create more. */
+  const showEmpty = !children || count === 0;
+
   return (
     <section
       data-cta-form="1"
@@ -59,14 +66,21 @@ export function StatCard({
 
       <div className="relative z-[4] mt-4 h-px bg-[var(--border-subtle)]" />
 
-      {/* Empty state, centred in the remaining space. */}
-      <div className="relative z-[4] flex flex-1 flex-col items-center justify-center gap-3 py-6 text-center">
-        <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-grid text-accent" style={{ background: "var(--ndi-mint-04)" }}>
-          <Icon name={emptyIcon} size={19} strokeWidth={1.7} />
-        </span>
-        <p className="m-0 max-w-[34ch] text-[13.5px] leading-[1.55] text-muted">{emptyMessage}</p>
-        {action}
-      </div>
+      {showEmpty ? (
+        /* Empty state, centred in the remaining space. */
+        <div className="relative z-[4] flex flex-1 flex-col items-center justify-center gap-3 py-6 text-center">
+          <span
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-grid text-accent"
+            style={{ background: "var(--ndi-mint-04)" }}
+          >
+            <Icon name={emptyIcon} size={19} strokeWidth={1.7} />
+          </span>
+          <p className="m-0 max-w-[34ch] text-[13.5px] leading-[1.55] text-muted">{emptyMessage}</p>
+          {action}
+        </div>
+      ) : (
+        <div className="relative z-[4] flex flex-1 flex-col gap-3 pt-4">{children}</div>
+      )}
     </section>
   );
 }
