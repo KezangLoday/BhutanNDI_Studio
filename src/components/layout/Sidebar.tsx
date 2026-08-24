@@ -60,7 +60,7 @@ const ACCOUNT: NavItem[] = [
 const SECONDARY: NavItem[] = [
   { label: "GitHub Repository", icon: "github", href: "#", external: true },
   { label: "Documentation", icon: "fileText", href: "#", external: true },
-  { label: "Support", icon: "helpCircle", href: "#", external: true },
+  { label: "Support", icon: "helpCircle", href: "/legal/support" },
 ];
 
 interface SidebarProps {

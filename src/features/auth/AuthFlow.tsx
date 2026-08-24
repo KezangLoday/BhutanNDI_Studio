@@ -75,9 +75,13 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
 const registeredNotice =
   "Congratulations — your NDI Studio account is registered. Sign in to continue.";
 
-export function AuthFlow() {
+/**
+ * The signed-out flow. /sign-in and /sign-up mount it at their own step, so
+ * each has a real URL to link to; / still opens on login, as before.
+ */
+export function AuthFlow({ start = "login-email" }: { start?: AuthStep } = {}) {
   const router = useRouter();
-  const [step, setStep] = useState<AuthStep>("login-email");
+  const [step, setStep] = useState<AuthStep>(start);
   const [email, setEmail] = useState("");
   const [notice, setNotice] = useState<string | null>(null);
 
@@ -150,9 +154,7 @@ export function AuthFlow() {
         <LoginPasswordStep
           email={email}
           onSubmit={() => router.push("/dashboard")}
-          onForgotPassword={() =>
-            setNotice("Password reset is not wired up in this design build.")
-          }
+          onForgotPassword={() => router.push("/reset-password")}
           onCreateAccount={() => go("signup-name")}
           onBack={() => go("login-method")}
         />
