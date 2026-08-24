@@ -2,6 +2,7 @@
 
 import { Icon } from "@/components/ui/icons";
 
+import { AccountMenu } from "./AccountMenu";
 import { Lockup } from "./Lockup";
 import { OrgSwitcher } from "./OrgSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
@@ -74,14 +75,7 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
 
           <ThemeToggle />
 
-          <button
-            type="button"
-            aria-label="Account"
-            className="inline-flex h-10 w-10 flex-none items-center justify-center rounded-full border border-grid font-display text-[13px] font-semibold text-[var(--text-on-mint)]"
-            style={{ background: "var(--grad-mint)" }}
-          >
-            K
-          </button>
+          <AccountMenu />
         </div>
       </div>
     </header>
