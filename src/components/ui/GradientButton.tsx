@@ -2,9 +2,12 @@
 
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-/** The design's primary CTA gradient — the website's exact ramp. */
-export const GRADIENT =
-  "linear-gradient(115deg, #8CF0C0 0%, #6FE0A9 24%, #4FC091 56%, #2FA189 80%, #1E8189 100%)";
+/**
+ * The primary CTA fill. A token rather than a literal, because the ramp the
+ * website ships ends in a dark teal: against ink that is depth, against paper
+ * it is a smudge. The light theme carries a shorter ramp of its own.
+ */
+export const GRADIENT = "var(--grad-cta)";
 
 interface GradientButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;

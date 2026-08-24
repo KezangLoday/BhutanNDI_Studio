@@ -41,6 +41,14 @@ export function WaveBanner({
         preserveAspectRatio="xMaxYMid slice"
         className="pointer-events-none absolute inset-y-0 right-0 z-[2] h-full w-[62%]"
         fill="none"
+        /* The traces are sliced out of a wider drawing, so without this their
+           left edge lands as a hard vertical seam mid-banner — a row of lines
+           that start from nothing. The mask dissolves them into the panel
+           instead. */
+        style={{
+          maskImage: "linear-gradient(90deg, transparent 0%, black 26%)",
+          WebkitMaskImage: "linear-gradient(90deg, transparent 0%, black 26%)",
+        }}
       >
         {Array.from({ length: 9 }, (_, i) => {
           const offset = i * 11;

@@ -87,7 +87,9 @@
   --accent: var(--ndi-mint);
   --accent-hover: var(--ndi-mint-bright);
   --accent-press: var(--ndi-mint-deep);
-  --focus-ring: var(--ndi-mint-40);
+  /* The field's border already goes solid accent on focus, so the halo is the
+     second signal, not the only one. 3px of it at 40% read as a slab. */
+  --focus-ring: rgba(90, 201, 148, 0.3);
 
   /* ---- Elevation & glow ---------------------------------- */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -97,7 +99,7 @@
   --glow-md: 0 0 24px rgba(90, 201, 148, 0.35);
   --glow-lg: 0 0 48px rgba(90, 201, 148, 0.4);
   --glow-text: 0 0 24px rgba(90, 201, 148, 0.45);
-  --ring: 0 0 0 3px var(--focus-ring);
+  --ring: 0 0 0 2px var(--focus-ring);
   --inset-top: inset 0 1px 0 rgba(255, 255, 255, 0.06);
   --blur-glass: 18px;
 
@@ -105,6 +107,16 @@
   --grad-depth: radial-gradient(120% 120% at 50% -10%, #163a3c 0%, #141b29 46%, #0c111b 100%);
   --grad-card: linear-gradient(160deg, rgba(26, 88, 91, 0.28) 0%, rgba(35, 46, 64, 0.5) 60%);
   --grad-mint: linear-gradient(135deg, #6fe0a9 0%, #5ac994 55%, #3da876 100%);
+  /* The filled CTA. Travels from luminance 214 down to 109 — on the dark
+     ground that reads as depth, which is what it was drawn for. */
+  --grad-cta: linear-gradient(
+    115deg,
+    #8cf0c0 0%,
+    #6fe0a9 24%,
+    #4fc091 56%,
+    #2fa189 80%,
+    #1e8189 100%
+  );
   --grad-text: linear-gradient(92deg, #6fe0a9 0%, #5ac994 60%, #2e8d8f 100%);
 
   /* ---- Wireframe grid ------------------------------------ */
@@ -250,7 +262,7 @@
   --accent: var(--ndi-mint-ink);
   --accent-hover: #17694a;
   --accent-press: #12553b;
-  --focus-ring: rgba(29, 125, 87, 0.42);
+  --focus-ring: rgba(29, 125, 87, 0.24);
 
   /* ---- Elevation & glow ---------------------------------- */
   /* Glows are the first thing that reads as grubby on a light ground, so
@@ -269,6 +281,11 @@
   --grad-depth: radial-gradient(120% 120% at 50% -10%, #dceee5 0%, #eaf2f0 46%, #f5f8f7 100%);
   --grad-card: linear-gradient(160deg, rgba(29, 125, 87, 0.07) 0%, rgba(255, 255, 255, 0.85) 60%);
   --grad-text: linear-gradient(92deg, #1d7d57 0%, #17694a 60%, #145d55 100%);
+  /* The dark end of the CTA ramp is depth against ink and a smudge against
+     paper — on a light panel the button stopped looking like one colour with
+     a sheen and started looking like a rendering fault. Same family, a third
+     of the luminance travel. */
+  --grad-cta: linear-gradient(115deg, #63d6a2 0%, #4cbf8c 55%, #38a97d 100%);
   --grad-wave: linear-gradient(
     105deg,
     #145d43 0%,
