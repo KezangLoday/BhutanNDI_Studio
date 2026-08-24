@@ -23,7 +23,7 @@ export function HairlineButton({
   return (
     <button
       type={type}
-      className={`ndi-hairline-btn inline-flex h-12 cursor-pointer items-center justify-center gap-2.5 rounded-xl border border-grid bg-white/[0.02] px-6 font-display text-[14.5px] font-semibold text-body ${
+      className={`ndi-hairline-btn inline-flex h-12 cursor-pointer items-center justify-center gap-2.5 rounded-xl border border-grid bg-[rgb(var(--tint)/0.03)] px-6 font-display text-[14.5px] font-semibold text-body ${
         block ? "w-full" : ""
       } ${className}`.trim()}
       {...props}

@@ -42,7 +42,7 @@ export function AuthShell({ children, title, lead, scene }: AuthShellProps) {
               {["Verified credentials", "End-to-end encrypted"].map((label) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-2 rounded-full border border-grid bg-[rgba(12,17,27,0.5)] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-accent"
+                  className="inline-flex items-center gap-2 rounded-full border border-grid bg-[var(--fill-sunk)] px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-accent"
                 >
                   <Icon name="check" size={12} strokeWidth={2.4} />
                   {label}
@@ -87,7 +87,7 @@ export function StepHeader({ title, subtitle, onBack }: StepHeaderProps) {
           type="button"
           onClick={onBack}
           aria-label="Go back"
-          className="ndi-backbtn mt-0.5 inline-flex h-10 w-10 flex-none cursor-pointer items-center justify-center rounded-xl border border-grid bg-white/[0.02] text-accent"
+          className="ndi-backbtn mt-0.5 inline-flex h-10 w-10 flex-none cursor-pointer items-center justify-center rounded-xl border border-grid bg-[rgb(var(--tint)/0.03)] text-accent"
         >
           <Icon name="arrowLeft" size={18} strokeWidth={2} />
         </button>

@@ -35,16 +35,7 @@
 
 /* ---- Emphasised phrase ------------------------------------- */
 .ndi-wave-text {
-  background: linear-gradient(
-    105deg,
-    #2f8f6b 0%,
-    #5ac994 25%,
-    #7ddcac 42%,
-    #9deec4 50%,
-    #7ddcac 58%,
-    #5ac994 75%,
-    #2f8f6b 100%
-  );
+  background: var(--grad-wave);
   background-size: 220% 100%;
   background-repeat: no-repeat;
   -webkit-background-clip: text;
@@ -79,7 +70,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+  background: linear-gradient(90deg, transparent, rgb(var(--gloss) / 0.14), transparent);
   transform: translateX(-100%);
   transition: transform 1s var(--ease-out);
 }
@@ -90,9 +81,9 @@
   opacity: 0;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.07),
-    rgba(255, 255, 255, 0.02) 50%,
-    rgba(255, 255, 255, 0.07)
+    rgb(var(--gloss) / 0.07),
+    rgb(var(--gloss) / 0.02) 50%,
+    rgb(var(--gloss) / 0.07)
   );
   transition: opacity 0.5s var(--ease-out);
 }
@@ -154,7 +145,7 @@
   padding: 0 15px;
   border-radius: 999px;
   border: 1px solid var(--border-grid);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgb(var(--tint) / 0.03);
   color: var(--text-muted);
   font-family: var(--font-body);
   font-size: 13px;
@@ -167,7 +158,7 @@
 }
 .ndi-chip input:checked + span {
   color: var(--accent);
-  border-color: rgba(90, 201, 148, 0.45);
+  border-color: var(--ndi-mint-40);
   background: var(--ndi-mint-08);
   box-shadow: var(--glow-sm);
 }
@@ -231,11 +222,7 @@
   background: var(--fill-panel);
   -webkit-backdrop-filter: blur(12px) saturate(140%) brightness(1.03);
   backdrop-filter: blur(12px) saturate(140%) brightness(1.03);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 1px 0 0 rgba(255, 255, 255, 0.04),
-    inset 0 -20px 34px -24px rgba(255, 255, 255, 0.07),
-    0 18px 40px -26px rgba(0, 0, 0, 0.9);
+  box-shadow: var(--shadow-card);
 }
 /* The lens rim: a 1px conic highlight travelling the panel's edge. */
 [data-cta-form]::after {
@@ -249,11 +236,11 @@
   opacity: 0.45;
   background: conic-gradient(
     from 205deg at 50% 50%,
-    rgba(255, 255, 255, 0.22),
-    rgba(255, 255, 255, 0.02) 26%,
-    rgba(255, 255, 255, 0.13) 52%,
-    rgba(255, 255, 255, 0.02) 78%,
-    rgba(255, 255, 255, 0.22)
+    rgb(var(--tint) / 0.22),
+    rgb(var(--tint) / 0.02) 26%,
+    rgb(var(--tint) / 0.13) 52%,
+    rgb(var(--tint) / 0.02) 78%,
+    rgb(var(--tint) / 0.22)
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -287,10 +274,10 @@
 }
 
 .shiny-cta {
-  --shiny-cta-bg: #0e1622;
-  --shiny-cta-bg-subtle: #16202e;
+  --shiny-cta-bg: var(--surface-cta);
+  --shiny-cta-bg-subtle: var(--surface-cta-subtle);
   --shiny-cta-fg: var(--text-strong);
-  --shiny-cta-highlight: #5ac994;
+  --shiny-cta-highlight: var(--accent);
   --shiny-cta-highlight-subtle: #8be3b8;
   --shiny-cta-px: 2.5rem;
   --shiny-cta-py: 1.25rem;
@@ -426,7 +413,7 @@
 }
 .ndi-hairline-btn:hover {
   color: var(--text-strong);
-  border-color: rgba(90, 201, 148, 0.45);
+  border-color: var(--ndi-mint-40);
   background: var(--ndi-mint-08);
   box-shadow: var(--glow-sm);
 }
@@ -442,7 +429,7 @@
 }
 .ndi-backbtn:hover {
   background: var(--ndi-mint-08);
-  border-color: rgba(90, 201, 148, 0.42);
+  border-color: var(--ndi-mint-40);
   color: var(--text-strong);
   box-shadow: var(--glow-sm);
 }
@@ -455,8 +442,8 @@
 
 /* ---- Native control colours -------------------------------- */
 select option {
-  background: #101827;
-  color: #e9eef6;
+  background: var(--surface-menu);
+  color: var(--text-body);
 }
 
 /* Cards that are whole-card links lift on hover. */
@@ -547,7 +534,7 @@ select option {
 }
 .ndi-navrow:hover {
   color: var(--text-strong);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgb(var(--tint) / 0.05);
 }
 .ndi-navrow:focus-visible {
   outline: none;
@@ -555,7 +542,7 @@ select option {
 }
 .ndi-navrow[data-active="1"] {
   color: var(--accent);
-  border-color: rgba(90, 201, 148, 0.32);
+  border-color: var(--border-strong);
   background: var(--ndi-mint-12);
 }
 .ndi-navrow[data-active="1"] svg {
@@ -587,9 +574,9 @@ select option {
   padding: 8px 11px;
   border-radius: 9px;
   border: 1px solid rgba(90, 201, 148, 0.22);
-  background: #0f1522;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  color: var(--text-body);
+  background: var(--surface-tooltip);
+  box-shadow: 0 14px 34px rgb(var(--shade) / 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: var(--text-tooltip);
   font-size: 12px;
   line-height: 1.45;
   opacity: 0;
@@ -632,7 +619,7 @@ select option {
 }
 .ndi-tab[data-active="1"] {
   color: var(--text-strong);
-  border-color: rgba(90, 201, 148, 0.32);
+  border-color: var(--border-strong);
   background: var(--ndi-mint-12);
 }
 .ndi-tab[data-active="1"] svg {
@@ -669,7 +656,7 @@ select option {
   transition: background var(--dur) var(--ease-out);
 }
 .ndi-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgb(var(--tint) / 0.04);
 }
 
 /* ---- Native select, themed -------------------------------- */
@@ -703,14 +690,14 @@ select option {
 .ndi-iconbtn {
   cursor: pointer;
   border: 1px solid var(--border-grid);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgb(var(--tint) / 0.03);
   color: var(--text-muted);
   transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out),
     background var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
 }
 .ndi-iconbtn:hover {
   color: var(--accent);
-  border-color: rgba(90, 201, 148, 0.45);
+  border-color: var(--ndi-mint-40);
   background: var(--ndi-mint-08);
 }
 .ndi-iconbtn:focus-visible {

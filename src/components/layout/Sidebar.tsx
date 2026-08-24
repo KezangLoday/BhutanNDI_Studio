@@ -68,7 +68,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
       <div
         aria-hidden="true"
         onClick={onClose}
-        className="fixed inset-0 z-[54] bg-[rgba(6,10,16,0.62)] backdrop-blur-[5px] transition-opacity duration-[280ms] min-[901px]:hidden"
+        className="fixed inset-0 z-[54] bg-[var(--scrim)] backdrop-blur-[5px] transition-opacity duration-[280ms] min-[901px]:hidden"
         style={{
           opacity: open ? 1 : 0,
           visibility: open ? "visible" : "hidden",
@@ -84,7 +84,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
            and a translucent band above a see-through one read as two
            different surfaces bolted together. As a drawer it stays more
            opaque, since content sits directly behind it. */
-        className="fixed left-0 top-16 z-[55] flex h-[calc(100dvh-4rem)] w-[248px] flex-col overflow-y-auto border-r border-subtle bg-[rgba(12,17,27,0.86)] px-3 py-5 backdrop-blur-[20px] backdrop-saturate-[140%] transition-transform duration-[260ms] ease-ndi min-[901px]:translate-x-0 min-[901px]:bg-[rgba(12,17,27,0.72)]"
+        className="fixed left-0 top-16 z-[55] flex h-[calc(100dvh-4rem)] w-[248px] flex-col overflow-y-auto border-r border-subtle bg-[var(--chrome-fill-strong)] px-3 py-5 backdrop-blur-[20px] backdrop-saturate-[140%] transition-transform duration-[260ms] ease-ndi min-[901px]:translate-x-0 min-[901px]:bg-[var(--chrome-fill)]"
         style={{ transform: open ? "translateX(0)" : undefined }}
       >
         <nav className="flex flex-col gap-0.5">

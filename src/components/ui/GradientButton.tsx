@@ -44,7 +44,7 @@ export function GradientButton({
             }
           : {
               background: GRADIENT,
-              color: "#08130f",
+              color: "var(--text-on-mint)",
               border: "1px solid transparent",
               boxShadow: "var(--glow-sm)",
             }

@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import { Icon } from "@/components/ui/icons";
 
+import { ThemeToggle } from "./ThemeToggle";
+
 interface TopBarProps {
   onToggleNav: () => void;
   navOpen: boolean;
@@ -13,7 +15,7 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
   const [orgOpen, setOrgOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[60] h-16 bg-[rgba(12,17,27,0.72)] backdrop-blur-[20px] backdrop-saturate-[140%]">
+    <header className="fixed inset-x-0 top-0 z-[60] h-16 bg-[var(--chrome-fill)] backdrop-blur-[20px] backdrop-saturate-[140%]">
       {/* The hairlines are drawn rather than set as a border-b, so the rule
           under the bar starts where the sidebar ends. A rule running the whole
           width cut the logo off from the nav column beneath it and made the
@@ -76,7 +78,7 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
               onClick={() => setOrgOpen((o) => !o)}
               aria-expanded={orgOpen}
               aria-haspopup="listbox"
-              className="ndi-hairline-btn inline-flex h-10 items-center gap-2.5 rounded-[10px] border border-grid bg-white/[0.02] px-3.5 font-display text-[13px] font-medium text-body"
+              className="ndi-hairline-btn inline-flex h-10 items-center gap-2.5 rounded-[10px] border border-grid bg-[rgb(var(--tint)/0.03)] px-3.5 font-display text-[13px] font-medium text-body"
             >
               <Icon name="building" size={15} strokeWidth={1.7} className="flex-none text-accent" />
               <span className="hidden min-[561px]:inline">Select organization</span>
@@ -95,9 +97,9 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
                 aria-label="Organizations"
                 className="absolute right-0 top-[calc(100%+8px)] z-[70] w-[248px] rounded-xl border p-1.5"
                 style={{
-                  borderColor: "rgba(90,201,148,0.22)",
-                  background: "#0F1522",
-                  boxShadow: "0 20px 48px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)",
+                  borderColor: "var(--border-grid)",
+                  background: "var(--surface-menu)",
+                  boxShadow: "0 20px 48px rgb(var(--shade) / 0.45), inset 0 1px 0 rgb(var(--gloss) / 0.06)",
                 }}
               >
                 <p className="px-3 py-3 text-[13px] leading-[1.5] text-muted">
@@ -124,14 +126,7 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
             <Icon name="bell" size={17} strokeWidth={1.7} />
           </button>
 
-          <button
-            type="button"
-            aria-label="Switch to light theme"
-            className="ndi-navrow inline-flex h-10 w-10 items-center justify-center rounded-[10px]"
-            data-active="0"
-          >
-            <Icon name="moon" size={17} strokeWidth={1.7} />
-          </button>
+          <ThemeToggle />
 
           <button
             type="button"

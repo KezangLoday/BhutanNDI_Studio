@@ -17,7 +17,7 @@ export function EmptyState({ icon, title, message, action, tone = "empty" }: Emp
       <span
         className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-grid text-accent"
         style={{
-          background: tone === "empty" ? "var(--ndi-mint-04)" : "rgba(255,255,255,0.02)",
+          background: tone === "empty" ? "var(--ndi-mint-04)" : "rgb(var(--tint) / 0.03)",
         }}
       >
         <Icon name={icon} size={24} strokeWidth={1.7} />

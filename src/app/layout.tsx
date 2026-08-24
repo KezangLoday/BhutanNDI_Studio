@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Mono, Host_Grotesk, Inter } from "next/font/google";
 
 import { Atmosphere } from "@/components/layout/Atmosphere";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 import "./globals.css";
 
@@ -36,7 +37,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       data-scroll-behavior="smooth"
       className={`${hostGrotesk.variable} ${inter.variable} ${dmMono.variable}`}
+      data-theme="dark"
+      suppressHydrationWarning
     >
+      <head>
+        {/* Blocking on purpose: it sets data-theme before the first paint, so
+            a light-theme visitor never sees the dark ground flash first. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body>
         {/* isolate creates the stacking context the atmosphere layers sit behind */}
         <div className="relative isolate min-h-screen">

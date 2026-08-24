@@ -32,7 +32,7 @@ export function WalletGate({ title, crumbLabel }: { title: string; crumbLabel: s
             action={
               <Link
                 href="/organizations"
-                className="ndi-hairline-btn inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-grid bg-white/[0.02] px-5 font-display text-[13.5px] font-semibold text-body"
+                className="ndi-hairline-btn inline-flex h-11 items-center justify-center gap-2.5 rounded-xl border border-grid bg-[rgb(var(--tint)/0.03)] px-5 font-display text-[13.5px] font-semibold text-body"
               >
                 <Icon name="building" size={15} strokeWidth={1.7} />
                 Go to organizations

@@ -26,7 +26,7 @@ export function Tabs({ tabs, active, onChange, label }: TabsProps) {
     <div
       role="tablist"
       aria-label={label}
-      className="flex w-full rounded-xl border border-grid bg-white/[0.02] p-1 min-[641px]:inline-flex min-[641px]:w-auto"
+      className="flex w-full rounded-xl border border-grid bg-[rgb(var(--tint)/0.03)] p-1 min-[641px]:inline-flex min-[641px]:w-auto"
     >
       {tabs.map((tab) => {
         const isActive = tab.id === active;

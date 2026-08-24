@@ -4,9 +4,9 @@
  * artwork. Animation classes live in ndi-effects.css.
  */
 
-const STROKE = "var(--ndi-mint)";
-const STROKE_DIM = "rgba(90,201,148,0.34)";
-const FILL_GLASS = "rgba(90,201,148,0.06)";
+const STROKE = "var(--accent)";
+const STROKE_DIM = "var(--ndi-mint-40)";
+const FILL_GLASS = "var(--ndi-mint-08)";
 
 function ScanlineDef() {
   return (
@@ -73,7 +73,7 @@ export function SecureSignInScene() {
         width="82"
         height="24"
         rx="7"
-        fill="rgba(90,201,148,0.12)"
+        fill="var(--ndi-mint-12)"
         stroke={STROKE}
         strokeWidth="1.7"
       />
@@ -86,7 +86,7 @@ export function SecureSignInScene() {
       />
 
       <g className="ndi-scene__seal">
-        <circle cx="322" cy="228" r="34" fill="rgba(12,17,27,0.92)" stroke={STROKE} strokeWidth="1.7" />
+        <circle cx="322" cy="228" r="34" fill="var(--scene-knockout)" stroke={STROKE} strokeWidth="1.7" />
         <path
           d="M322 204c-6 3-10.5 4.2-10.5 4.2v14c0 8.4 4.5 13 10.5 15.6 6-2.6 10.5-7.2 10.5-15.6v-14S328 207 322 204Z"
           stroke={STROKE}
@@ -173,13 +173,13 @@ export function PasskeyScene() {
       <path d="M188 235h58" stroke={STROKE_DIM} strokeWidth="1.7" strokeLinecap="round" />
 
       <g className="ndi-scene__seal">
-        <circle cx="62" cy="120" r="28" fill="rgba(12,17,27,0.92)" stroke={STROKE} strokeWidth="1.7" />
+        <circle cx="62" cy="120" r="28" fill="var(--scene-knockout)" stroke={STROKE} strokeWidth="1.7" />
         <circle cx="56" cy="114" r="7" stroke={STROKE} strokeWidth="1.7" />
         <path d="M61 119l14 14M69 127l5 5M75 121l5 5" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
       </g>
 
       <g className="ndi-scene__seal">
-        <circle cx="356" cy="200" r="28" fill="rgba(12,17,27,0.92)" stroke={STROKE} strokeWidth="1.7" />
+        <circle cx="356" cy="200" r="28" fill="var(--scene-knockout)" stroke={STROKE} strokeWidth="1.7" />
         <path
           d="M344 205a7 7 0 0 1 1.4-13.8 10 10 0 0 1 19 2.4 6 6 0 0 1-1.4 11.4h-19Z"
           stroke={STROKE}
@@ -231,7 +231,7 @@ export function PasswordScene() {
       />
 
       <g className="ndi-scene__seal">
-        <circle cx="212" cy="146" r="26" fill="rgba(12,17,27,0.92)" stroke={STROKE} strokeWidth="1.7" />
+        <circle cx="212" cy="146" r="26" fill="var(--scene-knockout)" stroke={STROKE} strokeWidth="1.7" />
         <rect x="202" y="143" width="20" height="14" rx="5" stroke={STROKE} strokeWidth="1.7" />
         <path d="M206 143v-3.6a6 6 0 0 1 12 0v3.6" stroke={STROKE} strokeWidth="1.7" strokeLinecap="round" />
         <path d="M212 149v3" stroke="var(--ndi-mint-bright)" strokeWidth="1.7" strokeLinecap="round" />

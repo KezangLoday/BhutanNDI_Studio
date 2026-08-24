@@ -97,7 +97,7 @@ export function SignupPasswordStep({ email, onSubmit, onBack }: SignupPasswordSt
                   color: met
                     ? "var(--text-accent)"
                     : failed
-                      ? "#f0866b"
+                      ? "var(--text-danger)"
                       : "var(--text-faint)",
                 }}
               >
@@ -125,10 +125,10 @@ export function SignupPasswordStep({ email, onSubmit, onBack }: SignupPasswordSt
             onChange={(event) => setConfirm(event.target.value)}
             aria-invalid={mismatch}
             className={`${FIELD_CLASS} h-12`}
-            style={mismatch ? { borderColor: "#f0866b" } : undefined}
+            style={mismatch ? { borderColor: "var(--text-danger)" } : undefined}
           />
           {mismatch ? (
-            <p role="alert" className="m-0 flex items-center gap-2 text-[12.5px] text-[#f0866b]">
+            <p role="alert" className="m-0 flex items-center gap-2 text-[12.5px] text-[var(--text-danger)]">
               <Icon name="shieldAlert" size={13} strokeWidth={2} className="flex-none" />
               Both passwords must match.
             </p>
