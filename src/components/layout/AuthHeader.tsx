@@ -19,7 +19,7 @@ export function AuthHeader() {
   return (
     <header className="relative z-[60]">
       <div className="flex h-16 w-full items-center px-4 min-[641px]:px-6">
-        <Lockup className="block h-6 w-auto min-[641px]:h-7" />
+        <Lockup className="block h-7 w-auto min-[641px]:h-8" />
       </div>
     </header>
   );

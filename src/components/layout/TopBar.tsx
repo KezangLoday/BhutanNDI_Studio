@@ -56,17 +56,9 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
           alt="NDI Studio"
           width={2496}
           height={2436}
-          className="block h-7 w-auto flex-none min-[641px]:hidden"
+          className="block h-8 w-auto flex-none min-[641px]:hidden"
         />
-        {/* From 901px the lockup sits centred in the 248px block above the
-            sidebar rather than hard against the gutter, so it reads as that
-            column's head rather than as something parked in the corner. The
-            block is 247px wide, stopping at the rule that continues down the
-            rail. Below 901px there is no rail to head, so it stays inline
-            beside the menu button. */}
-        <span className="flex min-[901px]:-ml-6 min-[901px]:w-[247px] min-[901px]:flex-none min-[901px]:justify-center">
-          <Lockup className="hidden h-7 w-auto flex-none min-[641px]:block" />
-        </span>
+        <Lockup className="hidden h-8 w-auto flex-none min-[641px]:block" />
 
         <div className="ml-auto flex items-center gap-2">
           <OrgSwitcher />
