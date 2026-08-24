@@ -21,7 +21,7 @@ export function AuthHeader() {
           alt="NDI Studio"
           width={10718}
           height={1941}
-          className="block h-8 w-auto min-[641px]:h-9"
+          className="block h-6 w-auto min-[641px]:h-7"
         />
       </div>
     </header>

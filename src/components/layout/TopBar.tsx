@@ -13,7 +13,16 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
   const [orgOpen, setOrgOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[60] h-16 border-b border-subtle bg-[rgba(12,17,27,0.72)] backdrop-blur-[20px] backdrop-saturate-[140%]">
+    <header className="fixed inset-x-0 top-0 z-[60] h-16 bg-[rgba(12,17,27,0.72)] backdrop-blur-[20px] backdrop-saturate-[140%]">
+      {/* The hairlines are drawn rather than set as a border-b, so the rule
+          under the bar starts where the sidebar ends. A rule running the whole
+          width cut the logo off from the nav column beneath it and made the
+          two read as separate slabs; stopping it at 248px, and carrying the
+          sidebar's right edge up to the top of the screen, leaves the brand
+          block and the nav as one continuous surface. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[var(--border-subtle)] min-[901px]:left-[248px]" />
+      <div className="pointer-events-none absolute inset-y-0 left-[247px] hidden w-px bg-[var(--border-subtle)] min-[901px]:block" />
+
       <div className="flex h-full items-center gap-3 px-4 min-[641px]:px-6">
         <button
           type="button"
@@ -48,7 +57,7 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
           alt="NDI Studio"
           width={2496}
           height={2436}
-          className="block h-8 w-auto flex-none min-[641px]:hidden"
+          className="block h-7 w-auto flex-none min-[641px]:hidden"
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -56,7 +65,7 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
           alt="NDI Studio"
           width={10718}
           height={1941}
-          className="hidden h-8 w-auto flex-none min-[641px]:block min-[901px]:h-9"
+          className="hidden h-7 w-auto flex-none min-[641px]:block"
         />
 
         <div className="ml-auto flex items-center gap-2">
