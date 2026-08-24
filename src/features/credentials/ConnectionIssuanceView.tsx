@@ -8,6 +8,7 @@ import { GradientButton } from "@/components/ui/GradientButton";
 import { HairlineButton } from "@/components/ui/HairlineButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
+import { Select } from "@/components/ui/Select";
 import { Stepper } from "@/components/ui/Stepper";
 import { LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
@@ -65,21 +66,14 @@ export function ConnectionIssuanceView() {
           <div className="relative z-[4] flex flex-col gap-6">
             <label className="flex min-w-0 flex-col gap-[7px]">
               <span className={LABEL_CLASS}>Holder</span>
-              <select
-                className="ndi-select h-12 w-full"
+              <Select
+                label="Holder"
+                className="h-12 w-full"
                 value={connection?.id ?? ""}
-                onChange={(e) => setConnectionId(e.target.value)}
-              >
-                {active.length ? (
-                  active.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.label} · {c.id}
-                    </option>
-                  ))
-                ) : (
-                  <option value="">No active connections</option>
-                )}
-              </select>
+                onChange={setConnectionId}
+                placeholder="No active connections"
+                options={active.map((c) => ({ value: c.id, label: c.label, hint: c.id }))}
+              />
             </label>
 
             <CredentialPicker form={form} />
@@ -96,8 +90,8 @@ export function ConnectionIssuanceView() {
 
             <div className="flex flex-wrap items-center gap-2.5 border-t border-subtle pt-5">
               <GradientButton onClick={send}>
-                <Icon name="send" size={16} strokeWidth={2} />
                 Send offer
+                <Icon name="send" size={16} strokeWidth={2} />
               </GradientButton>
               <HairlineButton
                 className="h-12"

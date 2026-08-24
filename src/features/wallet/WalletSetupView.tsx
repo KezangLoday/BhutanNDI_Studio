@@ -1,8 +1,13 @@
+"use client";
+
+import { useState } from "react";
+
 import { AppShell } from "@/components/layout/AppShell";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { HairlineButton } from "@/components/ui/HairlineButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
+import { Select } from "@/components/ui/Select";
 import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
 
@@ -23,6 +28,19 @@ const STEPS = [
     body: "A schema names the attributes; a credential definition binds it to your DID and makes it issuable.",
   },
 ] as const;
+
+const LEDGERS = [
+  { value: "bhutan", label: "Bhutan NDI" },
+  { value: "indicio", label: "Indicio TestNet" },
+  { value: "none", label: "No ledger" },
+];
+
+function LedgerSelect() {
+  const [ledger, setLedger] = useState("bhutan");
+  return (
+    <Select label="Ledger" className="h-12 w-full" value={ledger} onChange={setLedger} options={LEDGERS} />
+  );
+}
 
 /**
  * Wallet setup is the gate in front of everything else an organization can do,
@@ -49,11 +67,7 @@ export function WalletSetupView() {
 
               <label className={FIELD_BLOCK_CLASS}>
                 <span className={LABEL_CLASS}>Ledger</span>
-                <select className="ndi-select h-12 w-full" defaultValue="bhutan">
-                  <option value="bhutan">Bhutan NDI</option>
-                  <option value="indicio">Indicio TestNet</option>
-                  <option value="none">No ledger</option>
-                </select>
+<LedgerSelect />
               </label>
 
               <div className="flex flex-wrap items-center gap-2.5 border-t border-subtle pt-5">

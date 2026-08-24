@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
+import { Select } from "@/components/ui/Select";
 
 import type { useIssuanceForm } from "./useIssuanceForm";
 
@@ -26,42 +27,32 @@ export function CredentialPicker({ form }: { form: Form }) {
       <div className="grid gap-4 min-[641px]:grid-cols-2">
         <label className={FIELD_BLOCK_CLASS}>
           <span className={LABEL_CLASS}>Schema</span>
-          <select
-            className="ndi-select h-12 w-full"
+          <Select
+            label="Schema"
+            className="h-12 w-full"
             value={schemaId}
-            onChange={(e) => chooseSchema(e.target.value)}
-          >
-            {schemas.length ? (
-              schemas.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.name} v{s.version}
-                </option>
-              ))
-            ) : (
-              <option value="">No schemas available</option>
-            )}
-          </select>
+            onChange={chooseSchema}
+            placeholder="No schemas available"
+            options={schemas.map((s) => ({ value: s.id, label: `${s.name} v${s.version}` }))}
+          />
         </label>
 
         <label className={FIELD_BLOCK_CLASS}>
           <span className={LABEL_CLASS}>Credential definition</span>
-          <select
-            className="ndi-select h-12 w-full"
+          <Select
+            label="Credential definition"
+            className="h-12 w-full"
             value={credDefId}
-            onChange={(e) => setCredDefId(e.target.value)}
+            onChange={setCredDefId}
             disabled={!defs.length}
-          >
-            {defs.length ? (
-              defs.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.tag}
-                  {d.revocable ? " (revocable)" : ""}
-                </option>
-              ))
-            ) : (
-              <option value="">No definitions for this schema</option>
-            )}
-          </select>
+            placeholder={
+              schemas.length ? "No definitions for this schema" : "Select a schema first"
+            }
+            options={defs.map((d) => ({
+              value: d.id,
+              label: d.tag + (d.revocable ? " (revocable)" : ""),
+            }))}
+          />
           {schema && !defs.length ? (
             <span className="text-[12.5px] leading-[1.5] text-faint">
               <Link

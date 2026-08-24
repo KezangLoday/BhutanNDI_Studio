@@ -50,6 +50,9 @@ const PRIMARY: NavItem[] = [
   },
   { label: "Ecosystems", icon: "ecosystems", href: "/ecosystems" },
   { label: "Billing", icon: "creditCard", href: "/organizations/billing" },
+  /* Also in the account menu. It is reached both ways on purpose: it belongs
+     to the person signed in, but it is somewhere you go to work. */
+  { label: "Developer settings", icon: "key", href: "/developers-setting" },
 ];
 
 const SECONDARY: NavItem[] = [

@@ -7,6 +7,7 @@ import { DataTable } from "@/components/ui/DataTable";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
+import { Select } from "@/components/ui/Select";
 import { SearchField } from "@/components/ui/SearchField";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { Toolbar, ToolbarCount } from "@/components/ui/Toolbar";
@@ -79,15 +80,16 @@ export function CertificatesView() {
                 </label>
                 <label className={FIELD_BLOCK_CLASS}>
                   <span className={LABEL_CLASS}>Key type</span>
-                  <select
-                    className="ndi-select h-12 w-full"
+                  <Select
+                    label="Key type"
+                    className="h-12 w-full"
                     value={keyType}
-                    onChange={(e) => setKeyType(e.target.value)}
-                  >
-                    <option>RSA 2048</option>
-                    <option>RSA 4096</option>
-                    <option>ECDSA P-256</option>
-                  </select>
+                    onChange={setKeyType}
+                    options={["RSA 2048", "RSA 4096", "ECDSA P-256"].map((v) => ({
+                      value: v,
+                      label: v,
+                    }))}
+                  />
                 </label>
                 <label className={FIELD_BLOCK_CLASS}>
                   <span className={LABEL_CLASS}>Expires</span>

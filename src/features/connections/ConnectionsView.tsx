@@ -9,6 +9,7 @@ import { GradientButton } from "@/components/ui/GradientButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { SearchField } from "@/components/ui/SearchField";
+import { Select } from "@/components/ui/Select";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { Toolbar } from "@/components/ui/Toolbar";
 import { Icon } from "@/components/ui/icons";
@@ -70,17 +71,15 @@ export function ConnectionsView() {
                 >
                   <Icon name="refresh" size={16} strokeWidth={1.8} />
                 </button>
-                <label className="flex items-center gap-2">
-                  <span className="sr-only">Sort order</span>
-                  <select
-                    className="ndi-select"
-                    value={order}
-                    onChange={(e) => setOrder(e.target.value)}
-                  >
-                    <option value="desc">Newest first</option>
-                    <option value="asc">Oldest first</option>
-                  </select>
-                </label>
+                <Select
+                  label="Sort order"
+                  value={order}
+                  onChange={setOrder}
+                  options={[
+                    { value: "desc", label: "Newest first" },
+                    { value: "asc", label: "Oldest first" },
+                  ]}
+                />
               </>
             }
           />

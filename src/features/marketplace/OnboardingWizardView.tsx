@@ -9,6 +9,7 @@ import { AuthHeader } from "@/components/layout/AuthHeader";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { HairlineButton } from "@/components/ui/HairlineButton";
 import { Panel } from "@/components/ui/Panel";
+import { Select } from "@/components/ui/Select";
 import { Stepper } from "@/components/ui/Stepper";
 import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
@@ -141,17 +142,18 @@ export function OnboardingWizardView() {
                   ) : (
                     <label className={FIELD_BLOCK_CLASS}>
                       <span className={LABEL_CLASS}>Organization</span>
-                      <select
-                        className="ndi-select h-12 w-full"
+                      <Select
+                        label="Organization"
+                        className="h-12 w-full"
                         value={chosen?.id ?? ""}
-                        onChange={(e) => setOrgId(e.target.value)}
-                      >
-                        {organizations.map((o) => (
-                          <option key={o.id} value={o.id}>
-                            {o.name} · {o.role}
-                          </option>
-                        ))}
-                      </select>
+                        onChange={setOrgId}
+                        placeholder="No organizations"
+                        options={organizations.map((o) => ({
+                          value: o.id,
+                          label: o.name,
+                          hint: o.role,
+                        }))}
+                      />
                     </label>
                   )}
 

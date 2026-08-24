@@ -8,6 +8,7 @@ import { GradientButton } from "@/components/ui/GradientButton";
 import { HairlineButton } from "@/components/ui/HairlineButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
+import { Select } from "@/components/ui/Select";
 import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
 import { useDemo } from "@/lib/demoStore";
@@ -77,17 +78,13 @@ export function CreateDidView() {
             <div className="grid gap-4 min-[641px]:grid-cols-2">
               <label className={FIELD_BLOCK_CLASS}>
                 <span className={LABEL_CLASS}>Key type</span>
-                <select
-                  className="ndi-select h-12 w-full"
+                <Select
+                  label="Key type"
+                  className="h-12 w-full"
                   value={keyType}
-                  onChange={(e) => setKeyType(e.target.value)}
-                >
-                  {KEY_TYPES.map((k) => (
-                    <option key={k} value={k}>
-                      {k}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setKeyType}
+                  options={KEY_TYPES.map((k) => ({ value: k, label: k }))}
+                />
               </label>
               <label className={FIELD_BLOCK_CLASS}>
                 <span className={LABEL_CLASS}>Alias</span>

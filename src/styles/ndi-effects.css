@@ -659,7 +659,45 @@ select option {
   background: rgb(var(--tint) / 0.04);
 }
 
+/* ---- Select ------------------------------------------------ */
+/* The trigger for the Select component. Same material as .ndi-field so a row
+   of inputs and selects sits on one line without a seam; the chevron is a
+   real icon in the component rather than a background image, so there is no
+   background-position to keep in step with the padding. */
+.ndi-select-trigger {
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-grid);
+  background: var(--surface-raised);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out),
+    background 0.2s var(--ease-out);
+}
+.ndi-select-trigger:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+.ndi-select-trigger:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--ring);
+}
+.ndi-select-trigger[aria-expanded="true"] {
+  border-color: var(--accent);
+  box-shadow: var(--ring);
+}
+.ndi-select-trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 /* ---- Native select, themed -------------------------------- */
+/* Kept for any remaining native control; the popup is drawn by the OS and
+   takes no styling beyond these two, which is why Select exists. */
 .ndi-select {
   appearance: none;
   height: 44px;

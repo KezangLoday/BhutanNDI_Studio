@@ -10,6 +10,7 @@ import { HairlineButton } from "@/components/ui/HairlineButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { Tabs, type TabItem } from "@/components/ui/Tabs";
+import { Select } from "@/components/ui/Select";
 import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
 import type { Attribute, LedgerKind } from "@/lib/demoData";
@@ -120,20 +121,13 @@ export function CreateSchemaView() {
                       value={row.name}
                       onChange={(e) => update(row.key, { name: e.target.value })}
                     />
-                    <label className="flex items-center">
-                      <span className="sr-only">Attribute type</span>
-                      <select
-                        className="ndi-select w-full"
-                        value={row.type}
-                        onChange={(e) => update(row.key, { type: e.target.value as Attribute["type"] })}
-                      >
-                        {TYPES.map((t) => (
-                          <option key={t} value={t}>
-                            {t}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
+                    <Select
+                      label={`Type of attribute ${row.name || row.key}`}
+                      className="w-full"
+                      value={row.type}
+                      onChange={(v) => update(row.key, { type: v as Attribute["type"] })}
+                      options={TYPES.map((t) => ({ value: t, label: t }))}
+                    />
                     <button
                       type="button"
                       aria-label={`Remove attribute ${row.name || row.key}`}

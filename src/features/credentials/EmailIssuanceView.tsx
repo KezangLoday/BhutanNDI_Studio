@@ -130,8 +130,8 @@ export function EmailIssuanceView() {
 
             <div className="flex flex-wrap items-center gap-2.5 border-t border-subtle pt-5">
               <GradientButton onClick={send}>
-                <Icon name="send" size={16} strokeWidth={2} />
                 Send {addressed.length > 1 ? `${addressed.length} offers` : "offer"}
+                <Icon name="send" size={16} strokeWidth={2} />
               </GradientButton>
               <HairlineButton className="h-12" onClick={() => router.push("/credentials/issue")}>
                 Cancel

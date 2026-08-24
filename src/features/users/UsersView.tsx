@@ -8,6 +8,7 @@ import { GradientButton } from "@/components/ui/GradientButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { SearchField } from "@/components/ui/SearchField";
+import { Select } from "@/components/ui/Select";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { Tabs, type TabItem } from "@/components/ui/Tabs";
 import { Toolbar, ToolbarCount } from "@/components/ui/Toolbar";
@@ -77,21 +78,16 @@ export function UsersView() {
               <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
                 Role
               </span>
-              <select
-                className="ndi-select h-11"
+              <Select
+                label="Role"
                 value={role}
-                onChange={(e) => setRole(e.target.value as Member["role"])}
-              >
-                {ROLES.map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
+                onChange={(v) => setRole(v as Member["role"])}
+                options={ROLES.map((r) => ({ value: r, label: r }))}
+              />
             </label>
             <GradientButton className="h-11" onClick={invite}>
-              <Icon name="send" size={15} strokeWidth={2} />
               Send invite
+              <Icon name="send" size={15} strokeWidth={2} />
             </GradientButton>
           </div>
         </Panel>

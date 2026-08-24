@@ -9,6 +9,7 @@ import { HairlineButton } from "@/components/ui/HairlineButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { QrPlaceholder } from "@/components/ui/QrPlaceholder";
+import { Select } from "@/components/ui/Select";
 import { Stepper } from "@/components/ui/Stepper";
 import { FIELD_BLOCK_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
@@ -82,14 +83,16 @@ export function OobIssuanceView() {
 
               <label className={FIELD_BLOCK_CLASS}>
                 <span className={LABEL_CLASS}>Reuse</span>
-                <select
-                  className="ndi-select h-12 w-full"
+                <Select
+                  label="Reuse"
+                  className="h-12 w-full"
                   value={reuse}
-                  onChange={(e) => setReuse(e.target.value)}
-                >
-                  <option value="once">Single use — expires after one scan</option>
-                  <option value="many">Multi use — anyone who scans receives the offer</option>
-                </select>
+                  onChange={setReuse}
+                  options={[
+                    { value: "once", label: "Single use — expires after one scan" },
+                    { value: "many", label: "Multi use — anyone who scans receives the offer" },
+                  ]}
+                />
                 <span className="text-[12.5px] leading-[1.5] text-faint">
                   A multi-use code issues to every holder who scans it. Use it for a counter or a
                   poster, not for a named individual.

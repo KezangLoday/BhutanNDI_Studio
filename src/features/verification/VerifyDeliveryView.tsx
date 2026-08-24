@@ -12,6 +12,7 @@ import { HairlineButton } from "@/components/ui/HairlineButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { QrPlaceholder } from "@/components/ui/QrPlaceholder";
+import { Select } from "@/components/ui/Select";
 import { StatusPill } from "@/components/ui/StatusPill";
 import { Stepper } from "@/components/ui/Stepper";
 import { FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
@@ -205,21 +206,14 @@ export function VerifyDeliveryView({ mode, back, crumbs }: Props) {
             {mode === "connection" ? (
               <label className="flex min-w-0 flex-col gap-[7px]">
                 <span className={LABEL_CLASS}>Holder</span>
-                <select
-                  className="ndi-select h-12 w-full"
+                <Select
+                  label="Holder"
+                  className="h-12 w-full"
                   value={pickedConnection || active[0]?.id || ""}
-                  onChange={(e) => setPickedConnection(e.target.value)}
-                >
-                  {active.length ? (
-                    active.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.label} · {c.id}
-                      </option>
-                    ))
-                  ) : (
-                    <option value="">No active connections</option>
-                  )}
-                </select>
+                  onChange={setPickedConnection}
+                  placeholder="No active connections"
+                  options={active.map((c) => ({ value: c.id, label: c.label, hint: c.id }))}
+                />
               </label>
             ) : null}
 
@@ -241,8 +235,8 @@ export function VerifyDeliveryView({ mode, back, crumbs }: Props) {
                 </GradientButton>
               ) : (
                 <GradientButton onClick={send}>
-                  <Icon name="send" size={16} strokeWidth={2} />
                   Send request
+                  <Icon name="send" size={16} strokeWidth={2} />
                 </GradientButton>
               )}
               <Link href={back}>
