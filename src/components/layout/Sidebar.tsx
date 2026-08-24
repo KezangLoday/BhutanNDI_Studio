@@ -25,7 +25,6 @@ interface NavItem {
 const PRIMARY: NavItem[] = [
   { label: "Dashboard", icon: "dashboard", href: "/dashboard" },
   { label: "Organizations", icon: "building", href: "/organizations" },
-  { label: "Invitations", icon: "mail", href: "/invitations" },
   { label: "Users", icon: "users", href: "/users" },
   { label: "Connections", icon: "connections", href: "/connections" },
   {
@@ -50,8 +49,18 @@ const PRIMARY: NavItem[] = [
   },
   { label: "Ecosystems", icon: "ecosystems", href: "/ecosystems" },
   { label: "Billing", icon: "creditCard", href: "/organizations/billing" },
-  /* Also in the account menu. It is reached both ways on purpose: it belongs
-     to the person signed in, but it is somewhere you go to work. */
+];
+
+/**
+ * Yours rather than the organization's: something waiting for you, and the
+ * keys you work with. They sit in their own block between the workspace and
+ * the off-app links, which is where they were before Profile moved to the
+ * account menu. Developer settings is in that menu too — reached both ways on
+ * purpose, since it belongs to the person signed in but is somewhere you go
+ * to work.
+ */
+const ACCOUNT: NavItem[] = [
+  { label: "Invitations", icon: "mail", href: "/invitations" },
   { label: "Developer settings", icon: "key", href: "/developers-setting" },
 ];
 
@@ -152,6 +161,27 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
               );
             }
 
+            const href = item.href ?? "#";
+            return (
+              <Link
+                key={item.label}
+                href={href}
+                onClick={onClose}
+                aria-current={isCurrent(href) ? "page" : undefined}
+                className="ndi-navrow flex w-full items-center gap-3 rounded-[10px] px-3 py-2.5 font-display text-[13.5px] font-medium"
+                data-active={isCurrent(href) ? "1" : "0"}
+              >
+                <Icon name={item.icon} size={18} strokeWidth={1.7} className="flex-none" />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="my-4 h-px bg-[var(--border-subtle)]" />
+
+        <nav aria-label="Account" className="flex flex-col gap-0.5">
+          {ACCOUNT.map((item) => {
             const href = item.href ?? "#";
             return (
               <Link
