@@ -27,7 +27,13 @@ export function DashboardView({ firstName = "Kezang" }: { firstName?: string }) 
           }
         />
 
-        <div className="grid grid-cols-1 gap-5 min-[901px]:grid-cols-2">
+        {/* Column count follows the space the cards actually have, not the
+            viewport. A viewport breakpoint got this backwards: at 900px the
+            drawer is closed and the full width goes to one stretched card,
+            then at 901px the sidebar claims 248px and the same content has to
+            fit two. Letting the track size drive it also fills a wide display
+            with four across instead of two and a lake of empty space. */}
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
           <StatCard
             title="Organizations"
             count={0}
