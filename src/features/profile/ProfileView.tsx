@@ -11,6 +11,7 @@ import { Panel } from "@/components/ui/Panel";
 import { Tabs, type TabItem } from "@/components/ui/Tabs";
 import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
 import { Icon } from "@/components/ui/icons";
+import { useDemo } from "@/lib/demoStore";
 
 const TABS: TabItem[] = [
   { id: "profile", label: "Profile", icon: "user" },
@@ -19,6 +20,7 @@ const TABS: TabItem[] = [
 ];
 
 export function ProfileView() {
+  const { resetDemo } = useDemo();
   const [tab, setTab] = useState("profile");
 
   return (
@@ -98,6 +100,26 @@ export function ProfileView() {
                 ),
               }}
             />
+          </Panel>
+        ) : null}
+
+        {tab === "profile" ? (
+          <Panel>
+            <div className="relative z-[4] flex flex-wrap items-center justify-between gap-4">
+              <div className="min-w-0">
+                <h2 className="m-0 font-display text-[15px] font-semibold text-strong">
+                  Reset demo data
+                </h2>
+                <p className="m-0 mt-1 text-[13.5px] leading-[1.55] text-muted">
+                  Puts every list back to the sample data this build ships with. Anything created
+                  or deleted in this browser is discarded.
+                </p>
+              </div>
+              <HairlineButton className="h-11 px-4 text-[13px]" onClick={resetDemo}>
+                <Icon name="refresh" size={15} strokeWidth={1.8} />
+                Reset demo data
+              </HairlineButton>
+            </div>
           </Panel>
         ) : null}
 

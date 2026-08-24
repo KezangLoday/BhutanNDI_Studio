@@ -79,6 +79,19 @@ export interface Organization {
   role: "Owner" | "Admin" | "Member";
   members: number;
   createdAt: string;
+  website?: string;
+  location?: string;
+  visibility: "public" | "private";
+}
+
+/** An invitation to join an ecosystem, as opposed to an organization. */
+export interface EcosystemInvitation {
+  id: string;
+  ecosystem: string;
+  invitedBy: string;
+  role: "Issuer" | "Verifier";
+  receivedAt: string;
+  state: "pending" | "accepted" | "declined";
 }
 
 export interface Member {
@@ -152,6 +165,8 @@ export interface ApiKey {
 }
 
 export interface DemoState {
+  /** Which organization the workspace is currently showing. */
+  activeOrgId: string;
   schemas: Schema[];
   credDefs: CredDef[];
   dids: Did[];
@@ -164,6 +179,7 @@ export interface DemoState {
   invitations: Invitation[];
   ecosystems: Ecosystem[];
   ecosystemMembers: EcosystemMember[];
+  ecosystemInvitations: EcosystemInvitation[];
   bulkUploads: BulkUpload[];
   bulkRecords: BulkRecord[];
   apiKeys: ApiKey[];
@@ -174,6 +190,7 @@ const ISSUER_DID = "did:indy:bhutan:8XkT4vQmR2sLpNbW9dHyZa";
 
 /** Dates are fixed strings, not computed: a demo should look the same twice. */
 export const SEED: DemoState = {
+  activeOrgId: "org-ndi",
   schemas: [
     {
       id: "schema:bhutan:2:CitizenshipID:1.2",
@@ -319,6 +336,9 @@ export const SEED: DemoState = {
       role: "Owner",
       members: 4,
       createdAt: "2026-02-20",
+      website: "https://www.bhutanndi.com",
+      location: "Thimphu, Bhutan",
+      visibility: "public",
     },
     {
       id: "org-rub",
@@ -327,6 +347,9 @@ export const SEED: DemoState = {
       role: "Admin",
       members: 2,
       createdAt: "2026-03-30",
+      website: "https://www.rub.edu.bt",
+      location: "Thimphu, Bhutan",
+      visibility: "public",
     },
   ],
   members: [
@@ -415,6 +438,16 @@ export const SEED: DemoState = {
       role: "Verifier",
       joinedAt: "2026-05-02",
       status: "invited",
+    },
+  ],
+  ecosystemInvitations: [
+    {
+      id: "einv-1",
+      ecosystem: "Himalayan Trust Network",
+      invitedBy: "governance@htn.org",
+      role: "Verifier",
+      receivedAt: "2026-08-20",
+      state: "pending",
     },
   ],
   bulkUploads: [

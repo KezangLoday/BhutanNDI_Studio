@@ -21,6 +21,7 @@ import {
   type DemoState,
   type Did,
   type Ecosystem,
+  type EcosystemInvitation,
   type Invitation,
   type LedgerKind,
   type Member,
@@ -56,8 +57,18 @@ interface DemoActions {
   addVerification: (input: { holder: string; schemaName: string }) => Verification;
   setVerificationState: (id: string, state: Verification["state"]) => void;
   addConnection: (label: string) => Connection;
-  addOrganization: (input: { name: string; description: string }) => Organization;
-  removeOrganization: (id: string) => void;
+  addOrganization: (input: {
+    name: string;
+    description: string;
+    website?: string;
+    location?: string;
+    visibility: Organization["visibility"];
+  }) => Organization;
+  updateOrganization: (id: string, patch: Partial<Organization>) => void;
+  /** Removes the organization and everything it owned. See the note below. */
+  deleteOrganization: (id: string) => void;
+  setActiveOrg: (id: string) => void;
+  respondToEcosystemInvitation: (id: string, state: EcosystemInvitation["state"]) => void;
   inviteMember: (input: { email: string; role: Member["role"] }) => Member;
   removeMember: (id: string) => void;
   addCertificate: (input: { commonName: string; keyType: string; expires: string }) => Certificate;
@@ -234,7 +245,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         return c;
       },
 
-      addOrganization: ({ name, description }) => {
+      addOrganization: ({ name, description, website, location, visibility }) => {
         const org: Organization = {
           id: rid("org"),
           name,
@@ -242,14 +253,69 @@ export function DemoProvider({ children }: { children: ReactNode }) {
           role: "Owner",
           members: 1,
           createdAt: today(),
+          website,
+          location,
+          visibility,
         };
-        setState((s) => ({ ...s, organizations: [org, ...s.organizations] }));
+        /* A newly created organization becomes the one you are working in —
+           anything else means creating it and then having to go and find it. */
+        setState((s) => ({
+          ...s,
+          organizations: [org, ...s.organizations],
+          activeOrgId: org.id,
+        }));
         log(`Organization ${name} created`);
         return org;
       },
 
-      removeOrganization: (id) =>
-        setState((s) => ({ ...s, organizations: s.organizations.filter((o) => o.id !== id) })),
+      updateOrganization: (id, patch) => {
+        setState((s) => ({
+          ...s,
+          organizations: s.organizations.map((o) => (o.id === id ? { ...o, ...patch } : o)),
+        }));
+        log("Organization profile updated");
+      },
+
+      /* The ledger in this demo belongs to the organization you are working
+         in — it is not scoped per organization the way a real deployment
+         would be. So deleting one takes its schemas, definitions, ledger and
+         connections with it, which is what the reference's cascade does and
+         what the confirmation screen counts up. Reset restores the seed. */
+      deleteOrganization: (id) =>
+        setState((s) => {
+          const organizations = s.organizations.filter((o) => o.id !== id);
+          return {
+            ...s,
+            organizations,
+            activeOrgId: organizations[0]?.id ?? "",
+            schemas: [],
+            credDefs: [],
+            credentials: [],
+            verifications: [],
+            connections: [],
+            bulkUploads: [],
+            bulkRecords: [],
+            members: s.members.filter((m) => m.role === "Owner"),
+            activity: [
+              { id: rid("a"), text: "Organization deleted", at: today() },
+              ...s.activity,
+            ].slice(0, 20),
+          };
+        }),
+
+      setActiveOrg: (id) => {
+        setState((s) => ({ ...s, activeOrgId: id }));
+      },
+
+      respondToEcosystemInvitation: (id, state) => {
+        setState((s) => ({
+          ...s,
+          ecosystemInvitations: s.ecosystemInvitations.map((i) =>
+            i.id === id ? { ...i, state } : i,
+          ),
+        }));
+        log(`Ecosystem invitation ${state}`);
+      },
 
       inviteMember: ({ email, role }) => {
         const m: Member = {

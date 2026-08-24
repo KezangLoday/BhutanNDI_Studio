@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { GradientButton } from "@/components/ui/GradientButton";
+import { HairlineButton } from "@/components/ui/HairlineButton";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Panel } from "@/components/ui/Panel";
 import { SearchField } from "@/components/ui/SearchField";
@@ -38,6 +39,12 @@ export function EcosystemsView() {
                 value={query}
                 onChange={setQuery}
               />
+              <Link href="/ecosystems/invitations">
+                <HairlineButton className="h-11 px-4 text-[13px]">
+                  <Icon name="mail" size={15} strokeWidth={1.8} />
+                  Invitations
+                </HairlineButton>
+              </Link>
               <GradientButton
                 className="h-11"
                 onClick={() => addEcosystem(`Ecosystem ${ecosystems.length + 1}`)}

@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-
 import { Icon } from "@/components/ui/icons";
 
+import { OrgSwitcher } from "./OrgSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface TopBarProps {
@@ -12,8 +11,6 @@ interface TopBarProps {
 }
 
 export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
-  const [orgOpen, setOrgOpen] = useState(false);
-
   return (
     <header className="fixed inset-x-0 top-0 z-[60] h-16 bg-[var(--chrome-fill)] backdrop-blur-[20px] backdrop-saturate-[140%]">
       {/* The hairlines are drawn rather than set as a border-b, so the rule
@@ -71,51 +68,7 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
         />
 
         <div className="ml-auto flex items-center gap-2">
-          {/* Organization selector */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setOrgOpen((o) => !o)}
-              aria-expanded={orgOpen}
-              aria-haspopup="listbox"
-              className="ndi-hairline-btn inline-flex h-10 items-center gap-2.5 rounded-[10px] border border-grid bg-[rgb(var(--tint)/0.03)] px-3.5 font-display text-[13px] font-medium text-body"
-            >
-              <Icon name="building" size={15} strokeWidth={1.7} className="flex-none text-accent" />
-              <span className="hidden min-[561px]:inline">Select organization</span>
-              <Icon
-                name="chevronDown"
-                size={13}
-                strokeWidth={2}
-                className="flex-none opacity-60 transition-transform duration-200 ease-ndi"
-                style={{ transform: `rotate(${orgOpen ? 180 : 0}deg)` }}
-              />
-            </button>
-
-            {orgOpen ? (
-              <div
-                role="listbox"
-                aria-label="Organizations"
-                className="absolute right-0 top-[calc(100%+8px)] z-[70] w-[248px] rounded-xl border p-1.5"
-                style={{
-                  borderColor: "var(--border-grid)",
-                  background: "var(--surface-menu)",
-                  boxShadow: "0 20px 48px rgb(var(--shade) / 0.45), inset 0 1px 0 rgb(var(--gloss) / 0.06)",
-                }}
-              >
-                <p className="px-3 py-3 text-[13px] leading-[1.5] text-muted">
-                  No organizations yet. Create one to start issuing credentials.
-                </p>
-                <button
-                  type="button"
-                  className="ndi-navrow flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-[13px]"
-                  data-active="0"
-                >
-                  <Icon name="plus" size={15} strokeWidth={2} className="flex-none text-accent" />
-                  Create organization
-                </button>
-              </div>
-            ) : null}
-          </div>
+          <OrgSwitcher />
 
           <button
             type="button"
