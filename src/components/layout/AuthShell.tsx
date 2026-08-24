@@ -14,7 +14,7 @@ interface AuthShellProps {
 }
 
 /**
- * Page shell: the fixed header pill, a two-column body that collapses to one
+ * Page shell: the header, a two-column body that collapses to one
  * below 901px (the website's tablet→desktop breakpoint), and the footer rule.
  * Max width and gutters follow the website's PageSection.
  */
