@@ -1,3 +1,5 @@
+import { Lockup } from "./Lockup";
+
 /**
  * The header on the signed-out pages: the lockup alone, sitting on the page
  * ground at the top-left corner.
@@ -17,16 +19,7 @@ export function AuthHeader() {
   return (
     <header className="relative z-[60]">
       <div className="flex h-16 w-full items-center px-4 min-[641px]:px-6">
-        {/* A plain img, not next/image: the asset is a static SVG, which Next
-            passes through unoptimised anyway. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/media/logos/ndi-studio-horizontal.svg"
-          alt="NDI Studio"
-          width={10718}
-          height={1941}
-          className="block h-6 w-auto min-[641px]:h-7"
-        />
+        <Lockup className="block h-6 w-auto min-[641px]:h-7" />
       </div>
     </header>
   );

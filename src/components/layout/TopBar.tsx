@@ -2,6 +2,7 @@
 
 import { Icon } from "@/components/ui/icons";
 
+import { Lockup } from "./Lockup";
 import { OrgSwitcher } from "./OrgSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -46,10 +47,9 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
           </svg>
         </button>
 
-        {/* The horizontal lockup runs ~6:1, so on phones it would crowd out the
-            org selector and the icon buttons beside it. Below 641px the mark
-            stands in for the full lockup; the bar's other chrome names the
-            product anyway. */}
+        {/* Below 641px the mark stands in for the lockup: even at the new
+            3.6:1 the full one leaves the row about a pixel short of the org
+            selector and the icon buttons beside it. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/media/logos/ndi-mark-mint.png"
@@ -58,14 +58,7 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
           height={2436}
           className="block h-7 w-auto flex-none min-[641px]:hidden"
         />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/media/logos/ndi-studio-horizontal.svg"
-          alt="NDI Studio"
-          width={10718}
-          height={1941}
-          className="hidden h-7 w-auto flex-none min-[641px]:block"
-        />
+        <Lockup className="hidden h-7 w-auto flex-none min-[641px]:block" />
 
         <div className="ml-auto flex items-center gap-2">
           <OrgSwitcher />

@@ -374,6 +374,19 @@ body {
   color: var(--text-strong);
 }
 
+/* ---- Theme-conditional assets ------------------------------------ */
+/* The lockup ships as two cuts — one drawn in ink for a light ground, one in
+   white for a dark one — and the right one is picked in CSS rather than in
+   React. A JS swap would have to wait for hydration, which is the one moment
+   a logo must not flicker. Attribute + class outranks Tailwind's single-class
+   `block`, so these still win over a responsive display utility. */
+[data-theme="dark"] .on-light-only {
+  display: none;
+}
+[data-theme="light"] .on-dark-only {
+  display: none;
+}
+
 /* In @layer base so a `text-*` utility on an anchor still wins. */
 @layer base {
   a {
