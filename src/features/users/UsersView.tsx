@@ -68,7 +68,7 @@ export function UsersView() {
               <input
                 type="email"
                 className={`${FIELD_CLASS} h-11`}
-                placeholder="name@organisation.bt"
+                placeholder="name@organization.bt"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && invite()}

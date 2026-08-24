@@ -23,7 +23,7 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
         Your identity, <span className="ndi-wave-text">verified once</span>
       </>
     ),
-    lead: "NDI Studio is where issuers manage credentials on the Bhutan National Digital Identity network.",
+    lead: "NDI Studio is where organizations issue and verify credentials on the Bhutan National Digital Identity network.",
   },
   "login-method": {
     scene: <PasskeyScene />,
@@ -41,16 +41,16 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
         Welcome back to <span className="ndi-wave-text">NDI Studio</span>
       </>
     ),
-    lead: "Enter your password to reach your organizations, schemas and credential definitions.",
+    lead: "Enter your password to reach your organizations, and everything you issue and verify through them.",
   },
   "signup-name": {
     scene: <SecureSignInScene />,
     title: (
       <>
-        Set up your <span className="ndi-wave-text">issuer account</span>
+        Set up your <span className="ndi-wave-text">Studio account</span>
       </>
     ),
-    lead: "Your name identifies you to the organisations you issue and verify credentials for.",
+    lead: "Your name identifies you to the organizations you issue and verify credentials for.",
   },
   "signup-method": {
     scene: <PasskeyScene />,
@@ -68,7 +68,7 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
         Set a password you <span className="ndi-wave-text">won&rsquo;t reuse</span>
       </>
     ),
-    lead: "It guards every credential you issue, so give it length over cleverness — a passphrase beats a short password with symbols in it.",
+    lead: "It guards every credential you issue and every proof you request, so give it length over cleverness — a passphrase beats a short password with symbols in it.",
   },
 };
 

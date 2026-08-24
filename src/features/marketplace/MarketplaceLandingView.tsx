@@ -67,7 +67,8 @@ export function MarketplaceLandingView() {
               </h1>
               <p className="mt-4 text-[17px] leading-[1.62] text-muted [text-wrap:pretty]">
                 Your subscription is ready to link. Set up an organization, or attach it to one you
-                already run, and you can issue your first credential in a few minutes.
+                already run, and you can issue your first credential or request your first proof in a few
+                minutes.
               </p>
             </div>
 
