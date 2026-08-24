@@ -4,8 +4,10 @@
  * than replaced by the website's floating pill. An app shell reads as a
  * workspace when its chrome is anchored; the pill belongs to a marketing page.
  *
- * The logo is the NDI Studio lockup, which already carries the product name, so
- * the bar sets no wordmark of its own beside it.
+ * The logo is the horizontal NDI Studio lockup, which already carries the
+ * product name, so the bar sets no wordmark of its own beside it. A single
+ * baseline suits a 64px bar better than the stacked lockup, whose two lines
+ * had to shrink to fit and turned mushy at this size.
  */
 export function AuthHeader() {
   return (
@@ -15,11 +17,11 @@ export function AuthHeader() {
             passes through unoptimised anyway. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/media/logos/ndi-studio-lockup.svg"
+          src="/media/logos/ndi-studio-horizontal.svg"
           alt="NDI Studio"
-          width={4331}
-          height={1910}
-          className="block h-10 w-auto"
+          width={10718}
+          height={1941}
+          className="block h-8 w-auto min-[641px]:h-9"
         />
       </div>
     </header>

@@ -38,13 +38,25 @@ export function TopBar({ onToggleNav, navOpen }: TopBarProps) {
           </svg>
         </button>
 
+        {/* The horizontal lockup runs ~6:1, so on phones it would crowd out the
+            org selector and the icon buttons beside it. Below 641px the mark
+            stands in for the full lockup; the bar's other chrome names the
+            product anyway. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/media/logos/ndi-studio-lockup.svg"
+          src="/media/logos/ndi-mark-mint.png"
           alt="NDI Studio"
-          width={4331}
-          height={1910}
-          className="block h-9 w-auto flex-none"
+          width={2496}
+          height={2436}
+          className="block h-8 w-auto flex-none min-[641px]:hidden"
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/media/logos/ndi-studio-horizontal.svg"
+          alt="NDI Studio"
+          width={10718}
+          height={1941}
+          className="hidden h-8 w-auto flex-none min-[641px]:block min-[901px]:h-9"
         />
 
         <div className="ml-auto flex items-center gap-2">
