@@ -10,7 +10,7 @@ import type { ReactNode } from "react";
  */
 export function SiteFooter({ children }: { children?: ReactNode }) {
   return (
-    <footer className="flex-none border-t border-subtle px-4 py-4 text-xs text-faint min-[641px]:px-6 min-[901px]:px-8">
+    <footer className="flex-none px-4 py-4 text-xs text-faint min-[641px]:px-6 min-[901px]:px-8">
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-center">
         <span>© 2019 – 2026 Bhutan NDI · All rights reserved.</span>
         {children}
