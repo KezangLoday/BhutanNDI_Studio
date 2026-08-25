@@ -11,6 +11,8 @@ interface AuthShellProps {
   title: ReactNode;
   lead: string;
   scene: ReactNode;
+  /** Sits above the card. For things about the account rather than the step. */
+  banner?: ReactNode;
 }
 
 /**
@@ -18,7 +20,7 @@ interface AuthShellProps {
  * below 901px (the website's tablet→desktop breakpoint), and the footer rule.
  * Max width and gutters follow the website's PageSection.
  */
-export function AuthShell({ children, title, lead, scene }: AuthShellProps) {
+export function AuthShell({ children, title, lead, scene, banner }: AuthShellProps) {
   return (
     <div className="flex min-h-dvh flex-col">
       <AuthHeader />
@@ -53,11 +55,25 @@ export function AuthShell({ children, title, lead, scene }: AuthShellProps) {
 
           {/* Right — the form panel. */}
           <section className="w-full justify-self-center min-[901px]:justify-self-end">
-            <div
-              data-cta-form="1"
-              className="relative mx-auto w-full max-w-[440px] rounded-[16px] border border-grid p-5 min-[561px]:p-7 min-[901px]:rounded-[20px] min-[901px]:p-8"
-            >
-              {children}
+            <div className="mx-auto flex w-full max-w-[440px] flex-col gap-4">
+              {banner ? (
+                <div
+                  className="rounded-[14px] border px-4 py-3.5"
+                  style={{
+                    borderColor: "var(--ndi-warning)",
+                    background: "rgb(var(--tint) / 0.03)",
+                  }}
+                >
+                  {banner}
+                </div>
+              ) : null}
+
+              <div
+                data-cta-form="1"
+                className="relative w-full rounded-[16px] border border-grid p-5 min-[561px]:p-7 min-[901px]:rounded-[20px] min-[901px]:p-8"
+              >
+                {children}
+              </div>
             </div>
           </section>
         </div>

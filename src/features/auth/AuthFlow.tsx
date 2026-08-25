@@ -4,19 +4,16 @@ import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 
 import { AuthShell } from "@/components/layout/AuthShell";
+import { PasswordScene, SecureSignInScene } from "@/components/ui/scenes";
 import { Icon } from "@/components/ui/icons";
-import { PasskeyScene, PasswordScene, SecureSignInScene } from "@/components/ui/scenes";
 
-import { LoginEmailStep } from "./LoginEmailStep";
-import { LoginMethodStep } from "./LoginMethodStep";
-import { LoginPasswordStep } from "./LoginPasswordStep";
-import { SignupMethodStep } from "./SignupMethodStep";
-import { SignupNameStep } from "./SignupNameStep";
-import { SignupPasswordStep } from "./SignupPasswordStep";
-import type { AuthMethod, AuthStep } from "./authTypes";
+import { LoginStep } from "./LoginStep";
+import { SignupDetailsStep } from "./SignupDetailsStep";
+import { SignupEmailStep } from "./SignupEmailStep";
+import type { AuthStep } from "./authTypes";
 
 const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string }> = {
-  "login-email": {
+  login: {
     scene: <SecureSignInScene />,
     title: (
       <>
@@ -25,43 +22,16 @@ const RAIL: Record<AuthStep, { scene: ReactNode; title: ReactNode; lead: string 
     ),
     lead: "NDI Studio is where organizations issue and verify credentials on the Bhutan National Digital Identity network.",
   },
-  "login-method": {
-    scene: <PasskeyScene />,
-    title: (
-      <>
-        Sign in <span className="ndi-wave-text">without a password</span>
-      </>
-    ),
-    lead: "A passkey binds your session to this device with your fingerprint, face, or screen lock — nothing to remember, nothing to phish.",
-  },
-  "login-password": {
-    scene: <PasswordScene />,
-    title: (
-      <>
-        Welcome back to <span className="ndi-wave-text">NDI Studio</span>
-      </>
-    ),
-    lead: "Enter your password to reach your organizations, and everything you issue and verify through them.",
-  },
-  "signup-name": {
+  "signup-email": {
     scene: <SecureSignInScene />,
     title: (
       <>
         Set up your <span className="ndi-wave-text">Studio account</span>
       </>
     ),
-    lead: "Your name identifies you to the organizations you issue and verify credentials for.",
+    lead: "One account, whichever side you are on — issue credentials, ask for proofs, or both.",
   },
-  "signup-method": {
-    scene: <PasskeyScene />,
-    title: (
-      <>
-        Choose how you <span className="ndi-wave-text">sign in</span>
-      </>
-    ),
-    lead: "Passkeys are the recommended method — encrypted, phishing-resistant, and portable across your devices.",
-  },
-  "signup-password": {
+  "signup-details": {
     scene: <PasswordScene />,
     title: (
       <>
@@ -76,10 +46,17 @@ const registeredNotice =
   "Congratulations — your NDI Studio account is registered. Sign in to continue.";
 
 /**
- * The signed-out flow. /sign-in and /sign-up mount it at their own step, so
- * each has a real URL to link to; / still opens on login, as before.
+ * The signed-out flow: sign in on one card, sign up across two.
+ *
+ * It used to run six cards, three of them serving passkeys — a method step in
+ * each direction, and the split between address and credential that only made
+ * sense because the method came between them. Passkeys are out of the product,
+ * so the questions they asked are gone with them.
+ *
+ * /sign-in and /sign-up mount it at their own step, so each has a real URL to
+ * link to; / still opens on sign-in.
  */
-export function AuthFlow({ start = "login-email" }: { start?: AuthStep } = {}) {
+export function AuthFlow({ start = "login" }: { start?: AuthStep } = {}) {
   const router = useRouter();
   const [step, setStep] = useState<AuthStep>(start);
   const [email, setEmail] = useState("");
@@ -92,20 +69,35 @@ export function AuthFlow({ start = "login-email" }: { start?: AuthStep } = {}) {
     setStep(next);
   };
 
-  const chooseLoginMethod = (method: AuthMethod) => {
-    if (method === "password") {
-      go("login-password");
-      return;
-    }
-    // No WebAuthn ceremony in a design build, so the passkey path lands where
-    // a successful one would.
-    router.push("/dashboard");
-  };
-
   const rail = RAIL[step];
 
   return (
-    <AuthShell scene={rail.scene} title={rail.title} lead={rail.lead}>
+    <AuthShell
+      scene={rail.scene}
+      title={rail.title}
+      lead={rail.lead}
+      /* The plan someone is signing up under is worth saying before they sign
+         up, not after — it sits above the card rather than inside it, because
+         it is about the account rather than about this step. */
+      banner={
+        step !== "login" ? (
+          <p className="m-0 flex items-start gap-2.5 text-[13px] leading-[1.55]">
+            <Icon
+              name="info"
+              size={15}
+              strokeWidth={2}
+              className="mt-px flex-none"
+              style={{ color: "var(--ndi-warning)" }}
+            />
+            <span className="text-body">
+              You are registering on the{" "}
+              <span className="font-semibold text-strong">Starter plan</span>, which is metered.
+              You can upgrade from billing once your organization exists.
+            </span>
+          </p>
+        ) : null
+      }
+    >
       {/* Status line, following the website's inline role="status" pattern
           rather than a floating toast — the site ships no toast component. */}
       {notice ? (
@@ -127,72 +119,40 @@ export function AuthFlow({ start = "login-email" }: { start?: AuthStep } = {}) {
         </p>
       ) : null}
 
-      {step === "login-email" ? (
-        <LoginEmailStep
+      {step === "login" ? (
+        <LoginStep
           initialEmail={email}
-          onNext={(value) => {
+          onSubmit={(value) => {
             setEmail(value);
-            go("login-method");
+            router.push("/dashboard");
           }}
+          onForgotPassword={() => router.push("/reset-password")}
           onCreateAccount={(value) => {
             setEmail(value);
-            go("signup-name");
+            go("signup-email");
           }}
         />
       ) : null}
 
-      {step === "login-method" ? (
-        <LoginMethodStep
-          email={email}
-          onSelect={chooseLoginMethod}
-          onCreateAccount={() => go("signup-name")}
-          onBack={() => go("login-email")}
-        />
-      ) : null}
-
-      {step === "login-password" ? (
-        <LoginPasswordStep
-          email={email}
-          onSubmit={() => router.push("/dashboard")}
-          onForgotPassword={() => router.push("/reset-password")}
-          onCreateAccount={() => go("signup-name")}
-          onBack={() => go("login-method")}
-        />
-      ) : null}
-
-      {step === "signup-name" ? (
-        <SignupNameStep
-          onContinue={() => go("signup-method")}
-          onLogin={() => go("login-email")}
-          onBack={() => go("login-email")}
-        />
-      ) : null}
-
-      {step === "signup-method" ? (
-        <SignupMethodStep
-          onSelect={(method) => {
-            /* A password has to be set before the account exists; a passkey is
-               created by the ceremony itself, so that path completes here. */
-            if (method === "password") {
-              go("signup-password");
-              return;
-            }
-            setStep("login-email");
-            setNotice(registeredNotice);
+      {step === "signup-email" ? (
+        <SignupEmailStep
+          initialEmail={email}
+          onContinue={(value) => {
+            setEmail(value);
+            go("signup-details");
           }}
-          onLogin={() => go("login-email")}
-          onBack={() => go("signup-name")}
+          onLogin={() => go("login")}
         />
       ) : null}
 
-      {step === "signup-password" ? (
-        <SignupPasswordStep
+      {step === "signup-details" ? (
+        <SignupDetailsStep
           email={email}
           onSubmit={() => {
-            setStep("login-email");
+            setStep("login");
             setNotice(registeredNotice);
           }}
-          onBack={() => go("signup-method")}
+          onBack={() => go("signup-email")}
         />
       ) : null}
     </AuthShell>

@@ -15,7 +15,6 @@ import { useDemo } from "@/lib/demoStore";
 
 const TABS: TabItem[] = [
   { id: "profile", label: "Profile", icon: "user" },
-  { id: "passkey", label: "Passkey", icon: "fingerprint" },
   { id: "sessions", label: "Sessions", icon: "shieldCheck" },
 ];
 
@@ -80,26 +79,6 @@ export function ProfileView() {
                 <HairlineButton className="h-12">Cancel</HairlineButton>
               </div>
             </div>
-          </Panel>
-        ) : null}
-
-        {tab === "passkey" ? (
-          <Panel padded={false}>
-            <DataTable
-              columns={["Passkey", "Device", "Added on", "Last used"]}
-              empty={{
-                icon: "fingerprint",
-                title: "No passkeys registered",
-                message:
-                  "A passkey signs you in with the device you already unlock, so there is no password to phish or reuse. Register one to stop relying on a password.",
-                action: (
-                  <GradientButton>
-                    <Icon name="plus" size={16} strokeWidth={2} />
-                    Add passkey
-                  </GradientButton>
-                ),
-              }}
-            />
           </Panel>
         ) : null}
 

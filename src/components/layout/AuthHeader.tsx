@@ -1,4 +1,5 @@
 import { Lockup } from "./Lockup";
+import { ThemeToggle } from "./ThemeToggle";
 
 /**
  * The header on the signed-out pages: the lockup alone, sitting on the page
@@ -20,6 +21,12 @@ export function AuthHeader() {
     <header className="relative z-[60]">
       <div className="flex h-16 w-full items-center px-4 min-[641px]:px-6">
         <Lockup className="block h-7 w-auto min-[641px]:h-8" />
+        {/* Signed out is where someone first meets the product, so the choice
+            of theme has to be reachable before there is an account to hang it
+            on. Same control as the top bar, same stored preference. */}
+        <span className="ml-auto">
+          <ThemeToggle />
+        </span>
       </div>
     </header>
   );

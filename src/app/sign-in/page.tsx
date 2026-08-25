@@ -5,5 +5,5 @@ import { AuthFlow } from "@/features/auth/AuthFlow";
 export const metadata: Metadata = { title: "Sign in — NDI Studio" };
 
 export default function SignInPage() {
-  return <AuthFlow start="login-email" />;
+  return <AuthFlow start="login" />;
 }
