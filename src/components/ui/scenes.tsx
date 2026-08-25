@@ -87,14 +87,16 @@ export function SecureSignInScene() {
 
       <g className="ndi-scene__seal">
         <circle cx="322" cy="228" r="34" fill="var(--scene-knockout)" stroke={STROKE} strokeWidth="1.7" />
+        {/* 25 wide by 31 tall. The previous outline was 21 by 34, which at this
+            size read as a squashed shield rather than a shield. */}
         <path
-          d="M322 204c-6 3-10.5 4.2-10.5 4.2v14c0 8.4 4.5 13 10.5 15.6 6-2.6 10.5-7.2 10.5-15.6v-14S328 207 322 204Z"
+          d="M322 211.5c-4 2.5-9 3.9-12.5 4.3v11.2c0 8 5 13 12.5 15.8 7.5-2.8 12.5-7.8 12.5-15.8v-11.2c-3.5-.4-8.5-1.8-12.5-4.3Z"
           stroke={STROKE}
           strokeWidth="1.7"
           strokeLinejoin="round"
         />
         <path
-          d="M317 222.5l3.6 3.6 7-7.4"
+          d="M315.9 225.4l4.2 4.2 8.4-9"
           stroke="var(--ndi-mint-bright)"
           strokeWidth="2"
           strokeLinecap="round"

@@ -89,17 +89,19 @@ const ALL_ICONS: Record<IconName, ReactNode> = {
       <path d="M12 11.5v8" />
     </>
   ),
+  /* 14.8 wide by 18.1 tall. The outline was 10 by 16, narrow enough that at
+     any size above about 20px it read as a squashed shield. */
   shieldCheck: (
     <>
-      <path d="M12 3c-3 1.5-5 2-5 2v6c0 4.5 2 7 5 8 3-1 5-3.5 5-8V5s-2-.5-5-2Z" />
-      <path d="M9.8 11.6l1.7 1.7 3-3.4" />
+      <path d="M12 2.9c-2.4 1.5-5.4 2.3-7.4 2.6V12c0 4.6 3.1 7.4 7.4 8.9 4.3-1.5 7.4-4.3 7.4-8.9V5.5c-2-.3-5-1.1-7.4-2.6Z" />
+      <path d="M9 11.8l2.3 2.3 4.1-4.5" />
     </>
   ),
   shieldAlert: (
     <>
-      <path d="M12 3c-3 1.5-5 2-5 2v6c0 4.5 2 7 5 8 3-1 5-3.5 5-8V5s-2-.5-5-2Z" />
-      <path d="M12 8v4" />
-      <path d="M12 15h.01" />
+      <path d="M12 2.9c-2.4 1.5-5.4 2.3-7.4 2.6V12c0 4.6 3.1 7.4 7.4 8.9 4.3-1.5 7.4-4.3 7.4-8.9V5.5c-2-.3-5-1.1-7.4-2.6Z" />
+      <path d="M12 8.4v4.2" />
+      <path d="M12 16.1h.01" />
     </>
   ),
   eye: (
