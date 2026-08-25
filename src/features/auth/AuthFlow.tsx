@@ -72,32 +72,7 @@ export function AuthFlow({ start = "login" }: { start?: AuthStep } = {}) {
   const rail = RAIL[step];
 
   return (
-    <AuthShell
-      scene={rail.scene}
-      title={rail.title}
-      lead={rail.lead}
-      /* The plan someone is signing up under is worth saying before they sign
-         up, not after — it sits above the card rather than inside it, because
-         it is about the account rather than about this step. */
-      banner={
-        step !== "login" ? (
-          <p className="m-0 flex items-start gap-2.5 text-[13px] leading-[1.55]">
-            <Icon
-              name="info"
-              size={15}
-              strokeWidth={2}
-              className="mt-px flex-none"
-              style={{ color: "var(--ndi-warning)" }}
-            />
-            <span className="text-body">
-              You are registering on the{" "}
-              <span className="font-semibold text-strong">Starter plan</span>, which is metered.
-              You can upgrade from billing once your organization exists.
-            </span>
-          </p>
-        ) : null
-      }
-    >
+    <AuthShell scene={rail.scene} title={rail.title} lead={rail.lead}>
       {/* Status line, following the website's inline role="status" pattern
           rather than a floating toast — the site ships no toast component. */}
       {notice ? (
