@@ -22,6 +22,11 @@ export function AuthCardHeader({
 }) {
   return (
     <header className="relative z-[4] mb-6 flex flex-col items-center gap-3 text-center">
+      {/* The step count reads as the eyebrow above the title, which is where
+          this design system puts a label, and it says where you are in words
+          rather than leaving two numbered discs to imply it. */}
+      {steps ? <AuthSteps current={steps[0]} total={steps[1]} /> : null}
+
       <div>
         <h1 className="m-0 font-display text-[26px] font-semibold leading-[1.15] tracking-[-0.025em] text-strong">
           {title}
@@ -30,46 +35,49 @@ export function AuthCardHeader({
           <p className="m-0 mt-1.5 text-[14px] leading-[1.5] text-muted">{subtitle}</p>
         ) : null}
       </div>
-
-      {steps ? <AuthSteps current={steps[0]} total={steps[1]} /> : null}
     </header>
   );
 }
 
+/**
+ * Progress across a two-card flow: a mono count, then one hairline track per
+ * step.
+ *
+ * It was a row of numbered discs joined by a 20px dash. At two steps that
+ * shape has nothing to number — a disc reading "2" next to a disc reading "1"
+ * tells you neither what either step is nor which you are on without decoding
+ * the fill, and the connector was too short to read as a rail, so it looked
+ * like a stray hyphen. The count states the position outright; the segments
+ * carry it at a glance and grow to n steps without ever becoming a diagram.
+ */
 function AuthSteps({ current, total }: { current: number; total: number }) {
   return (
-    <ol
-      className="m-0 flex list-none items-center gap-2 p-0"
-      aria-label={`Step ${current} of ${total}`}
-    >
-      {Array.from({ length: total }, (_, i) => {
-        const n = i + 1;
-        const done = n < current;
-        const on = n === current;
-        return (
-          <li key={n} className="flex items-center gap-2">
-            <span
-              aria-current={on ? "step" : undefined}
-              className="inline-flex h-7 w-7 items-center justify-center rounded-full border font-mono text-[11px]"
-              style={{
-                borderColor: done || on ? "transparent" : "var(--border-grid)",
-                background: done || on ? "var(--grad-mint)" : "rgb(var(--tint) / 0.04)",
-                color: done || on ? "var(--text-on-mint)" : "var(--text-faint)",
-              }}
-            >
-              {done ? <Icon name="check" size={13} strokeWidth={2.6} /> : n}
-            </span>
-            {n < total ? (
-              <span
-                aria-hidden="true"
-                className="h-px w-5"
-                style={{ background: "var(--border-subtle)" }}
-              />
-            ) : null}
-          </li>
-        );
-      })}
-    </ol>
+    <div className="flex w-full max-w-[168px] flex-col items-center gap-2">
+      <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
+        Step {current} <span className="opacity-50">of</span> {total}
+      </span>
+
+      <span
+        role="progressbar"
+        aria-valuemin={1}
+        aria-valuemax={total}
+        aria-valuenow={current}
+        aria-label={`Step ${current} of ${total}`}
+        className="flex w-full gap-1.5"
+      >
+        {Array.from({ length: total }, (_, i) => (
+          <span
+            key={i}
+            className="h-[3px] flex-1 rounded-full transition-[background,box-shadow] duration-[--dur] ease-ndi"
+            style={
+              i + 1 <= current
+                ? { background: "var(--grad-mint)", boxShadow: "var(--glow-sm)" }
+                : { background: "var(--border-grid)" }
+            }
+          />
+        ))}
+      </span>
+    </div>
   );
 }
 

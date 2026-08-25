@@ -4,6 +4,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Icon } from "@/components/ui/icons";
 
 import { AuthHeader } from "./AuthHeader";
+import { SiteFooter } from "./SiteFooter";
 
 interface AuthShellProps {
   children: ReactNode;
@@ -63,11 +64,7 @@ export function AuthShell({ children, title, lead, scene }: AuthShellProps) {
         </div>
       </main>
 
-      <footer className="border-t border-subtle px-5 py-4 text-xs text-faint min-[641px]:px-8">
-        <div className="mx-auto max-w-[1200px]">
-          © 2019 – 2026 Bhutan NDI · All rights reserved.
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { Atmosphere } from "@/components/layout/Atmosphere";
 import { AuthHeader } from "@/components/layout/AuthHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { HairlineButton } from "@/components/ui/HairlineButton";
 import { Panel } from "@/components/ui/Panel";
@@ -76,11 +77,7 @@ export function OutcomeView({ tone, icon, title, lead, detail, primary, secondar
           </Panel>
         </main>
 
-        <footer className="border-t border-subtle px-4 py-4 text-xs text-faint min-[641px]:px-6">
-          <div className="mx-auto max-w-[620px]">
-            © 2019 – 2026 Bhutan NDI · All rights reserved.
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

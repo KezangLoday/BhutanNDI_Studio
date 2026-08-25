@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Atmosphere } from "@/components/layout/Atmosphere";
 import { AuthHeader } from "@/components/layout/AuthHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { Panel } from "@/components/ui/Panel";
 import { FIELD_BLOCK_CLASS, FIELD_CLASS, LABEL_CLASS } from "@/components/ui/formStyles";
@@ -114,11 +115,7 @@ export function ResetPasswordView() {
           </Panel>
         </main>
 
-        <footer className="border-t border-subtle px-4 py-4 text-xs text-faint min-[641px]:px-6">
-          <div className="mx-auto max-w-[520px]">
-            © 2019 – 2026 Bhutan NDI · All rights reserved.
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

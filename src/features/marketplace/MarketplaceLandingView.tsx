@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Atmosphere } from "@/components/layout/Atmosphere";
 import { AuthHeader } from "@/components/layout/AuthHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { Panel } from "@/components/ui/Panel";
 import { Icon, type IconName } from "@/components/ui/icons";
@@ -53,10 +54,10 @@ export function MarketplaceLandingView() {
   return (
     <div className="flex min-h-dvh flex-col">
       <Atmosphere />
-      <div className="relative z-[1]">
+      <div className="relative z-[1] flex min-h-dvh flex-col">
         <AuthHeader />
 
-        <main className="mx-auto w-full max-w-[1100px] px-4 py-10 min-[641px]:px-6 min-[901px]:py-16">
+        <main className="mx-auto w-full flex-1 max-w-[1100px] px-4 py-10 min-[641px]:px-6 min-[901px]:py-16">
           <div className="flex flex-col gap-8">
             <div className="max-w-[62ch]">
               <p className="m-0 font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
@@ -164,14 +165,11 @@ export function MarketplaceLandingView() {
           </div>
         </main>
 
-        <footer className="border-t border-subtle px-4 py-4 text-xs text-faint min-[641px]:px-6">
-          <div className="mx-auto flex max-w-[1100px] flex-wrap items-center gap-x-4 gap-y-2">
-            <span>© 2019 – 2026 Bhutan NDI · All rights reserved.</span>
-            <Link href="/legal/support" className="ndi-plainlink">
-              Support
-            </Link>
-          </div>
-        </footer>
+        <SiteFooter>
+          <Link href="/legal/support" className="ndi-plainlink">
+            Support
+          </Link>
+        </SiteFooter>
       </div>
     </div>
   );

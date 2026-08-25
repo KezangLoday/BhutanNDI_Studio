@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 
 import { Sidebar } from "./Sidebar";
+import { SiteFooter } from "./SiteFooter";
 import { TopBar } from "./TopBar";
 
 interface AppShellProps {
@@ -18,7 +19,7 @@ export function AppShell({ children }: AppShellProps) {
   const [navOpen, setNavOpen] = useState(false);
 
   return (
-    <div className="min-h-dvh">
+    <div>
       <TopBar navOpen={navOpen} onToggleNav={() => setNavOpen((o) => !o)} />
       <Sidebar open={navOpen} onClose={() => setNavOpen(false)} />
 
@@ -30,15 +31,15 @@ export function AppShell({ children }: AppShellProps) {
           empty gutter on a 1920 display. 1600 fills a common desktop while
           still stopping table rows and banner copy from running to arm's
           length on an ultrawide. */}
-      <div className="pt-16 min-[901px]:pl-[248px]">
-        <main className="mx-auto w-full max-w-[1600px] px-4 py-6 min-[641px]:px-6 min-[901px]:px-8 min-[901px]:py-8">
+      {/* A flex column at least as tall as the viewport, with the main region
+          growing: that is what holds the footer to the bottom on a short page
+          instead of letting it ride up under the content. box-sizing is
+          border-box, so pt-16 comes out of the dvh rather than adding to it. */}
+      <div className="flex min-h-dvh flex-col pt-16 min-[901px]:pl-[248px]">
+        <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-6 min-[641px]:px-6 min-[901px]:px-8 min-[901px]:py-8">
           {children}
         </main>
-        <footer className="border-t border-subtle px-4 py-4 text-xs text-faint min-[641px]:px-6 min-[901px]:px-8">
-          <div className="mx-auto max-w-[1600px]">
-            © 2019 – 2026 Bhutan NDI · All rights reserved.
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );

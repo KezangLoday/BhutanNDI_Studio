@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Atmosphere } from "@/components/layout/Atmosphere";
 import { AuthHeader } from "@/components/layout/AuthHeader";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Panel } from "@/components/ui/Panel";
 import { Icon } from "@/components/ui/icons";
 
@@ -34,10 +35,10 @@ export function LegalPage({ title, intro, sections, current }: Props) {
   return (
     <div className="flex min-h-dvh flex-col">
       <Atmosphere />
-      <div className="relative z-[1]">
+      <div className="relative z-[1] flex min-h-dvh flex-col">
         <AuthHeader />
 
-        <main className="mx-auto w-full max-w-[1000px] px-4 py-10 min-[641px]:px-6 min-[901px]:py-14">
+        <main className="mx-auto w-full flex-1 max-w-[1000px] px-4 py-10 min-[641px]:px-6 min-[901px]:py-14">
           <div className="flex flex-col gap-6">
             <div>
               <p className="m-0 font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
@@ -138,11 +139,7 @@ export function LegalPage({ title, intro, sections, current }: Props) {
           </div>
         </main>
 
-        <footer className="border-t border-subtle px-4 py-4 text-xs text-faint min-[641px]:px-6">
-          <div className="mx-auto max-w-[1000px]">
-            © 2019 – 2026 Bhutan NDI · All rights reserved.
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </div>
   );
